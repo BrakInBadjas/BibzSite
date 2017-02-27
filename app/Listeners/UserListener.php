@@ -2,7 +2,7 @@
 
 namespace App\Listeners;
 
-use App\Events\UserRegistered;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -27,7 +27,7 @@ class UserListener
      * @param  UserRegistered  $event
      * @return void
      */
-    public function handle(UserRegistered $event)
+    public function handle(Registered $event)
     {
          Mail::to($event->user)->send(new EmailVerification($event->user));
     }

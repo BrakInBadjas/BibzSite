@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-use App\Events\UserRegistered;
-
 class RegisterController extends Controller
 {
     /*
@@ -71,8 +69,6 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
             'email_token' => str_random(10),
         ]);
-
-        event(new UserRegistered($user));
 
         return $user;
     }
