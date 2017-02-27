@@ -14,10 +14,12 @@
 Route::get('/', ['as' => 'index', 'uses' => 'MainController@index']);
 
 Auth::routes();
-
-Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
+Route::get('/register/verify/{token}', ['as' => 'verify', 'uses' => 'Auth\RegisterController@verify']);
+Route::get('/register/verify/', ['as' => 'waiting', 'uses' => 'Auth\RegisterController@waiting']);
 
 Route::group(['middleware' => 'auth'], function() {
+    Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
+
     Route::post('/adtjes/collect', ['as' => 'adtjes.collect', 'uses' => 'AdtjeController@collect']);
     Route::resource('adtjes', 'AdtjeController');
 });
