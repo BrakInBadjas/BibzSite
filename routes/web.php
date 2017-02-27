@@ -11,12 +11,10 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', ['as' => 'index', 'as' => 'MainController@index']);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 Route::resource('adtjes', 'AdtjeController');
