@@ -40,10 +40,15 @@ class AdtjeController extends Controller
      */
     public function store(Request $request)
     {
+        $messages = [
+            'id.exists' => 'De opgegeven gebruiker bestaat niet!',
+            'reason.required' => 'Je moet een reden ingeven!'
+        ];
+
         Validator::make($request->all(), [
             'id' => 'exists:users',
             'reason' => 'required'
-        ])->validate();
+        ], $messages)->validate();
 
         $adtje = new Adtje;
         $adtje->user_id = $request->id;
