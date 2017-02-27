@@ -20,6 +20,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 <li><a href="{{ route('home') }}">Home</a></li>
+                <li><a href="{{ route('adtjes.index') }}">Adtjes</a></li>
             </ul>
 
             <!-- Right Side Of Navbar -->

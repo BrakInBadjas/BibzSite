@@ -27,7 +27,7 @@ class AdtjeController extends Controller
      */
     public function create()
     {
-        //
+        return view('adtjes.create');
     }
 
     /**
