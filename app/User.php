@@ -17,7 +17,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'email_token'
+    ];
+
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var array
+     */
+    protected $guarded = [
+        'verified',
     ];
 
     /**
@@ -28,6 +37,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Verifies the current user
+     */
+    public function verify()
+    {
+        $this->verified = 1;
+        $this->email_token = null;
+        $this->save();
+    }
 
     public function adtjes() {
         return $this->hasMany('Adtje');
