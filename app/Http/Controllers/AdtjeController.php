@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Adtje;
 
 use Illuminate\Http\Request;
+use Session;
+use Validator;
 
 class AdtjeController extends Controller
 {
@@ -38,7 +40,18 @@ class AdtjeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Validator::make($request->all(), [
+            'id' => 'exists:users',
+            'reason' => 'required'
+        ])->validate();
+
+        $adtje = new Adtje;
+        $adtje->user_id = $request->id;
+        $adtje->added_by = auth()->user()->id;
+        $adtje->reason = $request->reason;
+        $adtje->save();
+
+        return redirect()->route('adtjes.index');
     }
 
     /**
@@ -49,7 +62,7 @@ class AdtjeController extends Controller
      */
     public function show(Adtje $adtje)
     {
-        //
+        dd($adtje);
     }
 
     /**
@@ -60,7 +73,7 @@ class AdtjeController extends Controller
      */
     public function edit(Adtje $adtje)
     {
-        //
+        return redirect()->route('adtjes.index');
     }
 
     /**
@@ -72,7 +85,7 @@ class AdtjeController extends Controller
      */
     public function update(Request $request, Adtje $adtje)
     {
-        //
+        return redirect()->route('adtjes.index');
     }
 
     /**
@@ -83,6 +96,18 @@ class AdtjeController extends Controller
      */
     public function destroy(Adtje $adtje)
     {
-        //
+        return redirect()->route('adtjes.index');
+    }
+
+    public function collect(Request $request)
+    {
+        $adtje = Adtje::open()
+                        ->oldest()
+                        ->first();
+
+        $adtje->collected = true;
+        $adtje->save();
+
+        return redirect()->route('adtjes.index');
     }
 }

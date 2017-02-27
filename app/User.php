@@ -30,6 +30,6 @@ class User extends Authenticatable
     ];
 
     public function adtjes() {
-        return $this->hasMany('Adtje');
+        return $this->hasMany(Adtje::class);
     }
 }

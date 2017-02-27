@@ -17,4 +17,7 @@ Auth::routes();
 
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@index']);
 
-Route::resource('adtjes', 'AdtjeController');
+Route::group(['middleware' => 'auth'], function() {
+    Route::post('/adtjes/collect', ['as' => 'adtjes.collect', 'uses' => 'AdtjeController@collect']);
+    Route::resource('adtjes', 'AdtjeController');
+});

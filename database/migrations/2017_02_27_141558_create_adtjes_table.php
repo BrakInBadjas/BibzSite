@@ -20,6 +20,7 @@ class CreateAdtjesTable extends Migration
             $table->unsignedInteger('added_by');
             $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
             $table->text('reason');
+            $table->boolean('collected')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
