@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Adtje;
+
 use Illuminate\Http\Request;
 
 class AdtjeController extends Controller
@@ -14,7 +15,9 @@ class AdtjeController extends Controller
      */
     public function index()
     {
-        //
+        $adtjes = Adtje::latest()->get();
+
+        return view('adtjes.adtjes', ['adtjes' => $adtjes]);
     }
 
     /**
