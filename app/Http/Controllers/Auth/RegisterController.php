@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use Session;
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -37,7 +38,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('verify');
+        $this->middleware('guest')->except(['waiting', 'verify']);
     }
 
     /**
@@ -77,8 +78,21 @@ class RegisterController extends Controller
         return $user;
     }
 
-    public function verify($token)
+    public function waiting(Request $request)
     {
+        if($request->user()->verified){
+            return redirect(route('home'));
+        }
+        return view('auth.waiting');
+    }
+
+    public function verify(Request $request, $token)
+    {
+        $user = $request->user();
+        if($user != null && $user->verified){
+            return redirect(route('home'));
+        }
+
         $user = User::where('email_token',$token)->first();
         if($user != null){
             Session::put('verification_succes', 'Je email is geverifieerd!');
