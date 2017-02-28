@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Adtje;
+use App\Quote;
 
 use Illuminate\Http\Request;
-use Session;
 use Validator;
 
-class AdtjeController extends Controller
+class QuoteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +16,9 @@ class AdtjeController extends Controller
      */
     public function index()
     {
-        $adtjes = Adtje::latest()->get();
+        $quotes = Quote::latest()->get();
 
-        return view('adtjes.adtjes', ['adtjes' => $adtjes]);
+        return view('quotes.quotes', ['quotes' => $quotes]);
     }
 
     /**
@@ -29,7 +28,7 @@ class AdtjeController extends Controller
      */
     public function create()
     {
-        return view('adtjes.create');
+        return view('quotes.create');
     }
 
     /**
@@ -42,77 +41,66 @@ class AdtjeController extends Controller
     {
         $messages = [
             'id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'reason.required' => 'Je moet een reden ingeven!'
+            'quote.required' => 'Je moet een quote ingeven!'
         ];
 
         Validator::make($request->all(), [
             'id' => 'exists:users',
-            'reason' => 'required'
+            'quote' => 'required'
         ], $messages)->validate();
 
-        $adtje = new Adtje;
-        $adtje->user_id = $request->id;
-        $adtje->added_by = auth()->user()->id;
-        $adtje->reason = $request->reason;
-        $adtje->save();
+        $quote = new Quote;
 
-        return redirect()->route('adtjes.index');
+        $quote->user_id = $request->id;
+        $quote->quote = $request->quote;
+
+        $quote->save();
+
+        return redirect()->route('quotes.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Adtje  $adtje
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Adtje $adtje)
+    public function show(Quote $quote)
     {
-        return redirect()->route('adtjes.index');
+        return redirect()->route('quotes.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Adtje  $adtje
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Adtje $adtje)
+    public function edit(Quote $quote)
     {
-        return redirect()->route('adtjes.index');
+        return redirect()->route('quotes.index');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Adtje  $adtje
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Adtje $adtje)
+    public function update(Request $request, Quote $quote)
     {
-        return redirect()->route('adtjes.index');
+        return redirect()->route('quotes.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Adtje  $adtje
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Adtje $adtje)
+    public function destroy(Quote $quote)
     {
-        return redirect()->route('adtjes.index');
-    }
-
-    public function collect(Request $request)
-    {
-        $adtje = Adtje::open()
-                        ->oldest()
-                        ->first();
-
-        $adtje->collected = true;
-        $adtje->save();
-
-        return redirect()->route('adtjes.index');
+        return redirect()->route('quotes.index');
     }
 }

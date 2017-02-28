@@ -31,6 +31,17 @@
                             <li><a href="{{ route('adtjes.create') }}">Adtje toevoegen</a></li>
                         </ul>
                     </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Quotes
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('quotes.index') }}">Quote Lijst</a></li>
+                            <li><a href="{{ route('quotes.create') }}">Quote toevoegen</a></li>
+                        </ul>
+                    </li>
                 @endif
             </ul>
 
