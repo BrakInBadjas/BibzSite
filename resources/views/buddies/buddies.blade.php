@@ -6,32 +6,45 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('quote_added'))
+        @if (Session::has('buddy_added'))
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Buddy voor {{ Session::get('buddy_deleted')->user->name }} succesvol toegevoegd</h3>
+            </div>
+            <div class="panel-body">
+                {{ Session::get('buddy_deleted')->buddy->name }}: {{ Session::get('buddy_deleted')->relation }}
+            </div>
+        </div>
+        @endif
+        @if (Session::has('buddy_deleted'))
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Quote van {{ Session::get('quote_added_for') }} succesvol toegevoegd</h3>
+                    <h3 class="panel-title">Buddy van {{ Session::get('buddy_deleted')->user->name }} succesvol verwijderd</h3>
                 </div>
                 <div class="panel-body">
-                    {{ Session::get('quote_added') }}
+                    {{ Session::get('buddy_deleted')->buddy->name }}: {{ Session::get('buddy_deleted')->relation }}
                 </div>
             </div>
         @endif
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">
-                    @foreach ($quotes as $quote)
+                    @foreach ($buddies as $buddy)
                         <article class="timeline-entry">
                             <div class="timeline-entry-inner">
-                                <div class="timeline-icon bg-info">
-                                    <i class="entypo-feather"></i>
+                                <div class="timeline-icon bg-love">
+                                    <i class="fa fa-heart" aria-hidden="true"></i>
                                 </div>
                                 <div class="timeline-label">
                                     <h2>
-                                        <a href="{{ route('quotes.show', ['quote' => $quote->id]) }}">Quote</a> van
-                                        <a href="{{ route('quotes.index') }}">{{ $quote->user->name }}</a>
-                                        <span>{{ $quote->created_at->toFormattedDateString() }}</span>
+                                        <a href="{{ route('buddies.show', ['buddy' => $buddy->id]) }}">Buddy</a> voor
+                                        <a href="{{ route('buddies.index') }}">{{ $buddy->user->name }}</a>
+                                        <span>Toegevoegd op {{ $buddy->created_at->toFormattedDateString() }}
+                                        </span>
                                     </h2>
-                                    <p>"{{ $quote->quote }}"</p>
+                                    <p>
+                                        {{ $buddy->buddy->name }}: {{ $buddy->relation }}
+                                    </p>
                                 </div>
                             </div>
                         </article>
@@ -49,23 +62,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Quote counter</h3>
-                    </div>
-                    <table class="table">
-                        <tr>
-                            <th>Naam</th>
-                            <th>Quotes</th>
-                        </tr>
-                        @foreach (User::all() as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->quotes->count() }}</td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
+
             </div>
         </div>
     </div>

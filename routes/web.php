@@ -24,4 +24,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('adtjes', 'AdtjeController');
 
     Route::resource('quotes', 'QuoteController');
+
+    Route::resource('buddies', 'BuddyController');
 });
