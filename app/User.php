@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Adtje;
 use App\Quote;
+use App\Buddy;
 
 class User extends Authenticatable
 {
@@ -55,5 +56,17 @@ class User extends Authenticatable
 
     public function quotes() {
         return $this->hasMany(Quote::class);
+    }
+
+    public function myBuddies() {
+        return $this->hasMany(Buddy::class);
+    }
+
+    public function buddyOf() {
+        return $this->hasMany(Buddy::class, 'buddy_id');
+    }
+
+    public function allBuddies() {
+        return $this->myBuddies->merge($this->buddyOf);
     }
 }

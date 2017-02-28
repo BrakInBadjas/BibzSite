@@ -51,14 +51,12 @@ class QuoteController extends Controller
         ], $messages)->validate();
 
         $quote = new Quote;
-
         $quote->user_id = $request->id;
         $quote->quote = $request->quote;
-
         $quote->save();
 
         Session::flash('quote_added', $quote->quote);
-        Session::flash('quote_added_of', $quote->user->name);
+        Session::flash('quote_added_for', $quote->user->name);
 
         return redirect()->route('quotes.index');
     }

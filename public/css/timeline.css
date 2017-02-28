@@ -222,6 +222,11 @@ img {
     color: #fff;
 }
 
+.timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-love {
+    background-color: #fe506e;
+    color: #fff;
+}
+
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-icon.bg-warning {
     background-color: #fad839;
     color: #fff;

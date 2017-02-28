@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Adtje;
+use App\User;
 
 use Illuminate\Http\Request;
 use Session;
@@ -43,20 +44,44 @@ class AdtjeController extends Controller
     {
         $messages = [
             'id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'id.different' => 'Je kan geen adtje uitdelen aan jezelf',
             'reason.required' => 'Je moet een reden ingeven!'
         ];
 
-        Validator::make($request->all(), [
-            'id' => 'exists:users|different:'.Auth::user()->id,
+        $v = Validator::make($request->all(), [
+            'id' => 'exists:users',
             'reason' => 'required'
-        ], $messages)->validate();
+        ], $messages);
+
+        $v->after(function ($v) use ($request) {
+            if (Auth::user()->id == $request->id) {
+                $v->errors()->add('id', 'Je kan geen adtje uitdelen aan jezelf!');
+            }
+        });
+
+        if ($v->fails()) {
+            return redirect('adtjes/create')
+                    ->withErrors($v->errors())
+                    ->withInput();
+        }
 
         $adtje = new Adtje;
         $adtje->user_id = $request->id;
         $adtje->added_by = auth()->user()->id;
         $adtje->reason = $request->reason;
         $adtje->save();
+
+        $buddies = User::find($request->id)->allBuddies();
+        foreach ($buddies as $buddy) {
+            $adtje = new Adtje;
+            if ($buddy->user->id == $request->id) {
+                $adtje->user_id = $buddy->buddy->id;
+            } else {
+                $adtje->user_id = $buddy->user->id;
+            }
+            $adtje->added_by = auth()->user()->id;
+            $adtje->reason = 'Fucked by ' . User::find($request->id)->name;
+            $adtje->save();
+        }
 
         Session::flash('added_adtje', $adtje->reason);
         Session::flash('added_adtje_for', $adtje->user->name);
@@ -111,15 +136,13 @@ class AdtjeController extends Controller
 
     public function collect(Request $request)
     {
-        $adtje = Adtje::open()
-                        ->oldest()
-                        ->first();
+        $adtje = Auth::user()->adtjes()->open()->oldest()->first();
 
         $adtje->collected = true;
         $adtje->save();
 
-        Session::flash('collected_adtje', $adtje->reason);
-        Session::flash('collected_adtje_date', $adtje->created_at->toFormattedDateString());
+        Session::flash('collected_adtje_reason', $adtje->reason);
+        Session::flash('collected_adtje', $adtje->created_at->toFormattedDateString());
 
         return redirect()->route('adtjes.index');
     }
