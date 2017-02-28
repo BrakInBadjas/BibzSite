@@ -113,6 +113,9 @@ class AdtjeController extends Controller
         $adtje->collected = true;
         $adtje->save();
 
+        Session::flash('collected_adtje', $adtje->reason);
+        Session::flash('collected_adtje_date', $adtje->created_at->toFormattedDateString());
+
         return redirect()->route('adtjes.index');
     }
 }

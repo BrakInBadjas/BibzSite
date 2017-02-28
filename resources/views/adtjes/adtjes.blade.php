@@ -6,6 +6,16 @@
 
 @section('content')
     <div class="container">
+        @if (Session::has('collected_adtje'))
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Adtje succesvol geïnt van {{ Session::get('collected_adtje_date') }}</h3>
+                </div>
+                <div class="panel-body">
+                    {{ Session::get('collected_adtje') }}
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">
