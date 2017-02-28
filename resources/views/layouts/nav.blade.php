@@ -24,6 +24,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Adtjes
+                            @if(($count = Adtje::where('user_id', Auth::user()->id)->open()->count()) > 0)
+                                <span class="badge">{{$count}}</span>
+                            @endif
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
