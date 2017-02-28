@@ -19,4 +19,8 @@ class Adtje extends Model
     public function creator() {
         return $this->belongsTo(User::class, 'added_by');
     }
+
+    public function scopeOpen($query) {
+        return $query->where('collected', false);
+    }
 }

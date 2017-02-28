@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Adtje;
+use App\Quote;
 
 class User extends Authenticatable
 {
@@ -49,6 +50,10 @@ class User extends Authenticatable
     }
 
     public function adtjes() {
-        return $this->hasMany('Adtje');
+        return $this->hasMany(Adtje::class);
+    }
+
+    public function quotes() {
+        return $this->hasMany(Quote::class);
     }
 }

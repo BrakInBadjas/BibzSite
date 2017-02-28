@@ -6,34 +6,32 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('collected_adtje'))
+        @if (Session::has('quote_added'))
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Adtje succesvol geïnt van {{ Session::get('collected_adtje_date') }}</h3>
+                    <h3 class="panel-title">Quote van {{ Session::get('quote_added_of') }} succesvol toegevoegd</h3>
                 </div>
                 <div class="panel-body">
-                    {{ Session::get('collected_adtje') }}
+                    {{ Session::get('quote_added') }}
                 </div>
             </div>
         @endif
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">
-                    @foreach ($adtjes as $adtje)
+                    @foreach ($quotes as $quote)
                         <article class="timeline-entry">
                             <div class="timeline-entry-inner">
-                                <div class="timeline-icon bg-{{ $adtje->collected ? 'info' : 'success' }}">
+                                <div class="timeline-icon">
                                     <i class="entypo-feather"></i>
                                 </div>
                                 <div class="timeline-label">
                                     <h2>
-                                        <a href="{{ route('adtjes.show', ['adtje' => $adtje->id]) }}">Adtje</a> voor
-                                        <a href="{{ route('adtjes.index') }}">{{ $adtje->user->name }}</a>
-                                        <span>Uitgedeeld op {{ $adtje->created_at->toFormattedDateString() }} door
-                                            <a href="{{ route('adtjes.index') }}">{{ $adtje->creator->name }}</a>
-                                        </span>
+                                        <a href="{{ route('quotes.show', ['quote' => $quote->id]) }}">Quote</a> van
+                                        <a href="{{ route('quotes.index') }}">{{ $quote->user->name }}</a>
+                                        <span>{{ $quote->created_at->toFormattedDateString() }}</span>
                                     </h2>
-                                    <p>{{ $adtje->reason }}</p>
+                                    <p>"{{ $quote->quote }}"</p>
                                 </div>
                             </div>
                         </article>
@@ -51,29 +49,19 @@
                 </div>
             </div>
             <div class="col-md-4">
-                @if (Auth::user()->adtjes()->open()->count() != 0)
-                    <p>
-                        <form method="POST" action="{{ route('adtjes.collect') }}">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">Adtje innen</button>
-                        </form>
-                    </p>
-                @endif
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Adtjes counter</h3>
+                        <h3 class="panel-title">Quote counter</h3>
                     </div>
                     <table class="table">
                         <tr>
                             <th>Naam</th>
-                            <th>Adtjes</th>
-                            <th>Te innen</th>
+                            <th>Quotes</th>
                         </tr>
                         @foreach (User::all() as $user)
                             <tr>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->adtjes->count() }}</td>
-                                <td>{{ $user->adtjes()->open()->count() }}</td>
+                                <td>{{ $user->quotes->count() }}</td>
                             </tr>
                         @endforeach
                     </table>

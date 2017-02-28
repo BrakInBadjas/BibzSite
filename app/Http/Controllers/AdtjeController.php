@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Adtje;
 
 use Illuminate\Http\Request;
+use Session;
+use Validator;
 
 class AdtjeController extends Controller
 {
@@ -38,7 +40,23 @@ class AdtjeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $messages = [
+            'id.exists' => 'De opgegeven gebruiker bestaat niet!',
+            'reason.required' => 'Je moet een reden ingeven!'
+        ];
+
+        Validator::make($request->all(), [
+            'id' => 'exists:users',
+            'reason' => 'required'
+        ], $messages)->validate();
+
+        $adtje = new Adtje;
+        $adtje->user_id = $request->id;
+        $adtje->added_by = auth()->user()->id;
+        $adtje->reason = $request->reason;
+        $adtje->save();
+
+        return redirect()->route('adtjes.index');
     }
 
     /**
@@ -49,7 +67,7 @@ class AdtjeController extends Controller
      */
     public function show(Adtje $adtje)
     {
-        //
+        return redirect()->route('adtjes.index');
     }
 
     /**
@@ -60,7 +78,7 @@ class AdtjeController extends Controller
      */
     public function edit(Adtje $adtje)
     {
-        //
+        return redirect()->route('adtjes.index');
     }
 
     /**
@@ -72,7 +90,7 @@ class AdtjeController extends Controller
      */
     public function update(Request $request, Adtje $adtje)
     {
-        //
+        return redirect()->route('adtjes.index');
     }
 
     /**
@@ -83,6 +101,21 @@ class AdtjeController extends Controller
      */
     public function destroy(Adtje $adtje)
     {
-        //
+        return redirect()->route('adtjes.index');
+    }
+
+    public function collect(Request $request)
+    {
+        $adtje = Adtje::open()
+                        ->oldest()
+                        ->first();
+
+        $adtje->collected = true;
+        $adtje->save();
+
+        Session::flash('collected_adtje', $adtje->reason);
+        Session::flash('collected_adtje_date', $adtje->created_at->toFormattedDateString());
+
+        return redirect()->route('adtjes.index');
     }
 }

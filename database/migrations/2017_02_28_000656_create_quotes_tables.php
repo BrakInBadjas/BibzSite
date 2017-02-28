@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAdtjesTable extends Migration
+class CreateQuotesTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateAdtjesTable extends Migration
      */
     public function up()
     {
-        Schema::create('adtjes', function (Blueprint $table) {
+        Schema::create('quotes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedInteger('added_by');
-            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
-            $table->text('reason');
-            $table->boolean('collected')->default(false);
+            $table->text('quote');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -33,6 +29,6 @@ class CreateAdtjesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('adtjes');
+        Schema::dropIfExists('quotes');
     }
 }

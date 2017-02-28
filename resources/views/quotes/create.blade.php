@@ -5,13 +5,13 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Adtje toevoegen</div>
+                <div class="panel-heading">Quote toevoegen</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('adtjes.store') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('quotes.store') }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('id') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Voor</label>
+                            <label for="name" class="col-md-4 control-label">Gezegd door</label>
 
                             <div class="col-md-6">
                                 <select class="form-control" id="name" name="id" autofocus>
@@ -27,15 +27,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('reason') ? ' has-error' : '' }}">
-                            <label for="reason" class="col-md-4 control-label">Reden</label>
+                        <div class="form-group{{ $errors->has('quote') ? ' has-error' : '' }}">
+                            <label for="quote" class="col-md-4 control-label">Quote</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" rows="3" name="reason" value="{{ old('reason') }}"></textarea>
+                                <textarea class="form-control" rows="3" name="quote"></textarea>
 
-                                @if ($errors->has('reason'))
+                                @if ($errors->has('quote'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('reason') }}</strong>
+                                        <strong>{{ $errors->first('quote') }}</strong>
                                     </span>
                                 @endif
                             </div>
