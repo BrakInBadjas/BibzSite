@@ -7,6 +7,7 @@ use App\Adtje;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
+use Auth;
 
 class AdtjeController extends Controller
 {
@@ -42,11 +43,12 @@ class AdtjeController extends Controller
     {
         $messages = [
             'id.exists' => 'De opgegeven gebruiker bestaat niet!',
+            'id.different' => 'Je kan geen adtje uitdelen aan jezelf',
             'reason.required' => 'Je moet een reden ingeven!'
         ];
 
         Validator::make($request->all(), [
-            'id' => 'exists:users',
+            'id' => 'exists:users|different:'.Auth::user()->id,
             'reason' => 'required'
         ], $messages)->validate();
 
