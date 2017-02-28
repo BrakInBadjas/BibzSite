@@ -9,10 +9,20 @@
         @if (Session::has('collected_adtje'))
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Adtje succesvol geïnt van {{ Session::get('collected_adtje_date') }}</h3>
+                    <h3 class="panel-title">Adtje van {{ Session::get('collected_adtje') }} succesvol geïnt</h3>
                 </div>
                 <div class="panel-body">
-                    {{ Session::get('collected_adtje') }}
+                    {{ Session::get('collected_adtje_reason') }}
+                </div>
+            </div>
+        @endif
+        @if (Session::has('added_adtje'))
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Adtje voor {{ Session::get('added_adtje_for') }} succesvol toegevoegd</h3>
+                </div>
+                <div class="panel-body">
+                    {{ Session::get('added_adtje') }}
                 </div>
             </div>
         @endif
