@@ -28,10 +28,21 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('adtjes.index') }}">Adtjes</a></li>
-                            <li><a href="{{ route('adtjes.create') }}">Adtje toevoegen</a></li>
+                            <li><a href="{{ route('adtjes.create') }}">Adtje Toevoegen</a></li>
                         </ul>
                     </li>
 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Drinking Buddies
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{ route('buddies.index') }}">Drinking Buddies</a></li>
+                            <li><a href="{{ route('buddies.create') }}">Drinking Buddy Toevoegen</a></li>
+                        </ul>
+                    </li>
+                    
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Quotes
@@ -39,20 +50,11 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('quotes.index') }}">Quotes</a></li>
-                            <li><a href="{{ route('quotes.create') }}">Quote toevoegen</a></li>
+                            <li><a href="{{ route('quotes.create') }}">Quote Toevoegen</a></li>
                         </ul>
                     </li>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Drink-buddies
-                        </a>
 
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('buddies.index') }}">Drink buddies</a></li>
-                            <li><a href="{{ route('buddies.create') }}">Drink buddy toevoegen</a></li>
-                        </ul>
-                    </li>
                 @endif
             </ul>
 
