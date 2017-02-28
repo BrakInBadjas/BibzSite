@@ -1,5 +1,4 @@
-const { mix } = require('laravel-mix');
-
+const elixir = require('laravel-elixir');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -10,6 +9,8 @@ const { mix } = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
-mix.js('resources/assets/js/app.js', 'public/js')
-   .sass('resources/assets/sass/app.scss', 'public/css');
+elixir(function(mix) {
+    mix.styles([
+        'timeline.css'
+    ], 'public/css/timeline.css');
+});
