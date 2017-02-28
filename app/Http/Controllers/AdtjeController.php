@@ -56,6 +56,9 @@ class AdtjeController extends Controller
         $adtje->reason = $request->reason;
         $adtje->save();
 
+        Session::flash('added_adtje', $adtje->reason);
+        Session::flash('added_adtje_for', $adtje->user->name);
+
         return redirect()->route('adtjes.index');
     }
 
