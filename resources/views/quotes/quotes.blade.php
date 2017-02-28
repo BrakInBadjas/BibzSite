@@ -6,6 +6,16 @@
 
 @section('content')
     <div class="container">
+        @if (Session::has('quote_added'))
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Quote van {{ Session::get('quote_added_of') }} succesvol toegevoegd</h3>
+                </div>
+                <div class="panel-body">
+                    {{ Session::get('quote_added') }}
+                </div>
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">

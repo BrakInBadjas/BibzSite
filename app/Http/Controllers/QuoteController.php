@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Quote;
 
 use Illuminate\Http\Request;
+use Session;
 use Validator;
 
 class QuoteController extends Controller
@@ -55,6 +56,9 @@ class QuoteController extends Controller
         $quote->quote = $request->quote;
 
         $quote->save();
+
+        Session::flash('quote_added', $quote->quote);
+        Session::flash('quote_added_of', $quote->user->name);
 
         return redirect()->route('quotes.index');
     }
