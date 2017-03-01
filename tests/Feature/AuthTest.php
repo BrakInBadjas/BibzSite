@@ -50,8 +50,12 @@ class AuthTest extends TestCase
             ->call('GET', route('waiting'), [], [], [], self::HTTP_REQUEST_REF)
             ->assertRedirect(route('home'), "Does not redirect to home when verified.");
 
-            $this->actingAs($verified_user)
+        $this->actingAs($verified_user)
             ->call('GET', route('verify', ['token' => 'SomeRandomToken']), [], [], [], self::HTTP_REQUEST_REF)
+            ->assertRedirect(route('home'), "Does not redirect to home when verified.");
+
+        $this->actingAs($verified_user)
+            ->call('GET', url('login'), [], [], [], self::HTTP_REQUEST_REF)
             ->assertRedirect(route('home'), "Does not redirect to home when verified.");
     }
 
