@@ -99,7 +99,7 @@ class BuddyController extends Controller
      */
     public function edit(Buddy $buddy)
     {
-        return view('buddies.edit');
+        return redirect()->route('buddies.index');
     }
 
     /**
