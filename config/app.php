@@ -192,9 +192,11 @@ return [
 
     'aliases' => [
 
+        'Adtje' => App\Adtje::class,
+        'Buddy' => App\Buddy::class,
+        'Quote' => App\Quote::class,
         'User' => App\User::class,
 
-        'Adtje' => App\Adtje::class,
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
