@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Buddy;
 use App\User;
-
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator as Paginator;
 use Illuminate\Pagination\LengthAwarePaginator as LengthAwarePaginator;
-use Session;
+use Illuminate\Pagination\Paginator as Paginator;
 use Validator;
-use Auth;
 
 class BuddyController extends Controller
 {
@@ -32,7 +29,7 @@ class BuddyController extends Controller
         $buddies = $buddies->sortByDesc('event_date');
 
         $buddies = new LengthAwarePaginator(
-            $buddies->forPage(Paginator::resolveCurrentPage() , 15),
+            $buddies->forPage(Paginator::resolveCurrentPage(), 15),
             $buddies->count(), 15,
             Paginator::resolveCurrentPage(),
             ['path' => Paginator::resolveCurrentPath()]
@@ -62,13 +59,13 @@ class BuddyController extends Controller
         $messages = [
             'user_id.exists' => 'De opgegeven gebruiker bestaat niet!',
             'buddy_id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'relation.required' => 'Je moet een relatie ingeven!'
+            'relation.required' => 'Je moet een relatie ingeven!',
         ];
 
         $v = Validator::make($request->all(), [
             'user_id' => 'exists:users,id',
             'buddy_id' => 'exists:users,id',
-            'relation' => 'required'
+            'relation' => 'required',
         ], $messages);
 
         $v->after(function ($v) use ($request) {
@@ -106,6 +103,7 @@ class BuddyController extends Controller
     public function show($buddy)
     {
         $buddy = Buddy::withTrashed()->findOrFail($buddy);
+
         return view('buddies.show', ['buddy' => $buddy]);
     }
 

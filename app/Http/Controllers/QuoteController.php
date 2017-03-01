@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Quote;
-
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -42,12 +41,12 @@ class QuoteController extends Controller
     {
         $messages = [
             'id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'quote.required' => 'Je moet een quote ingeven!'
+            'quote.required' => 'Je moet een quote ingeven!',
         ];
 
         Validator::make($request->all(), [
             'id' => 'exists:users',
-            'quote' => 'required'
+            'quote' => 'required',
         ], $messages)->validate();
 
         $quote = new Quote;
