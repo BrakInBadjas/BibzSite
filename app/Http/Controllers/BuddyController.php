@@ -56,7 +56,7 @@ class BuddyController extends Controller
 
         $v->after(function ($v) use ($request) {
             $buddies = User::find($request->user_id)->allBuddies();
-            if ($buddies->where('user_id', $request->user_id)->count() > 0
+            if ($buddies->where('user_id', $request->buddy_id)->count() > 0
                 || $buddies->where('buddy_id', $request->buddy_id)->count() > 0) {
                 $v->errors()->add('duplicate', 'Deze twee zijn al drinking buddies!');
             }
@@ -86,9 +86,9 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function show(Buddie $buddie)
+    public function show(Buddy $buddy)
     {
-        return view('buddies.show', ['buddie' => $buddie]);
+        return view('buddies.show', ['buddy' => $buddy]);
     }
 
     /**
@@ -97,7 +97,7 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function edit(Buddie $buddie)
+    public function edit(Buddy $buddy)
     {
         return view('buddies.edit');
     }
@@ -109,7 +109,7 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buddie $buddie)
+    public function update(Request $request, Buddy $buddy)
     {
         return redirect()->route('buddies.index');
     }
@@ -120,9 +120,9 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buddie $buddie)
+    public function destroy(Buddy $buddy)
     {
-        $buddie->delete();
+        $buddy->delete();
 
         return redirect()->route('buddies.index');
     }

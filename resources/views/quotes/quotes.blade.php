@@ -31,7 +31,7 @@
                                         <a href="{{ route('quotes.index') }}">{{ $quote->user->name }}</a>
                                         <span>{{ $quote->created_at->toFormattedDateString() }}</span>
                                     </h2>
-                                    <p>"{{ $quote->quote }}"</p>
+                                    <p>{{ $quote->quote }}</p>
                                 </div>
                             </div>
                         </article>

@@ -64,23 +64,23 @@ class QuoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
     public function show(Quote $quote)
     {
-        return redirect()->route('quotes.index');
+        return view('quotes.show', ['quote' => $quote]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
     public function edit(Quote $quote)
     {
-        return redirect()->route('quotes.index');
+        return view('quotes.show', ['quote' => $quote]);
     }
 
     /**
@@ -92,6 +92,9 @@ class QuoteController extends Controller
      */
     public function update(Request $request, Quote $quote)
     {
+        $quote->quote = $request->quote;
+        $quote->save();
+
         return redirect()->route('quotes.index');
     }
 
@@ -103,6 +106,8 @@ class QuoteController extends Controller
      */
     public function destroy(Quote $quote)
     {
+        $quote->delete();
+
         return redirect()->route('quotes.index');
     }
 }

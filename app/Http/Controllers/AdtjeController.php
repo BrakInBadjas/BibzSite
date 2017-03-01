@@ -97,7 +97,7 @@ class AdtjeController extends Controller
      */
     public function show(Adtje $adtje)
     {
-        return redirect()->route('adtjes.index');
+        return view('adtjes.show', ['adtje' => $adtje]);
     }
 
     /**
@@ -108,7 +108,7 @@ class AdtjeController extends Controller
      */
     public function edit(Adtje $adtje)
     {
-        return redirect()->route('adtjes.index');
+        return view('adtjes.show', ['adtje' => $adtje]);
     }
 
     /**
@@ -120,6 +120,9 @@ class AdtjeController extends Controller
      */
     public function update(Request $request, Adtje $adtje)
     {
+        $adtje->reason = $request->reason;
+        $adtje->save();
+
         return redirect()->route('adtjes.index');
     }
 
@@ -131,6 +134,8 @@ class AdtjeController extends Controller
      */
     public function destroy(Adtje $adtje)
     {
+        $adtje->delete();
+
         return redirect()->route('adtjes.index');
     }
 

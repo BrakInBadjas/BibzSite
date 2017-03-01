@@ -19,14 +19,15 @@
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('home') }}">Home</a></li>
+                <li class="{{ Request::path() == 'home' ? 'active' : ''}}"><a href="{{ route('home') }}">Home</a></li>
                 @if (Auth::check())
-                    <li class="dropdown">
+                    <li class="dropdown {{ (strpos(Request::path(), 'adtjes') !== false) ? 'active' : ''}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Adtjes
                             @if(($count = Adtje::where('user_id', Auth::user()->id)->open()->count()) > 0)
                                 <span class="badge">{{$count}}</span>
                             @endif
+                            <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
@@ -35,9 +36,9 @@
                         </ul>
                     </li>
 
-                    <li class="dropdown">
+                    <li class="dropdown {{ (strpos(Request::path(), 'buddies') !== false) ? 'active' : ''}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Drinking Buddies
+                            Drinking Buddies <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
@@ -45,10 +46,10 @@
                             <li><a href="{{ route('buddies.create') }}">Drinking Buddy Toevoegen</a></li>
                         </ul>
                     </li>
-                    
-                    <li class="dropdown">
+
+                    <li class="dropdown {{ (strpos(Request::path(), 'quotes') !== false) ? 'active' : ''}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Quotes
+                            Quotes <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
