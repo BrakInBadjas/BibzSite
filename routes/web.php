@@ -26,4 +26,6 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('quotes', 'QuoteController');
 
     Route::resource('buddies', 'BuddyController');
+
+    Route::get('/profile/{id}', ['as' => 'profile', 'uses' => 'ProfileController@index']);
 });
