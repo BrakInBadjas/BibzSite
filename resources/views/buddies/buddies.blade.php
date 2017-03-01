@@ -29,23 +29,41 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">
-                    @foreach ($buddies as $buddy)
+                    @foreach ($buddies as $buddyData)
+                    <?php $buddy = $buddyData['object']; ?>
                         <article class="timeline-entry">
                             <div class="timeline-entry-inner">
-                                <div class="timeline-icon bg-love">
-                                    <i class="fa fa-heart" aria-hidden="true"></i>
-                                </div>
-                                <div class="timeline-label">
-                                    <h2>
-                                        <a href="{{ route('buddies.show', ['buddy' => $buddy->id]) }}">Buddy</a> voor
-                                        <a href="{{ route('buddies.index') }}">{{ $buddy->user->name }}</a>
-                                        <span>Toegevoegd op {{ $buddy->created_at->toFormattedDateString() }}
+                                @if(!$buddyData['break'])
+                                    <div class="timeline-icon bg-love">
+                                        <i class="fa fa-heart" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="timeline-label">
+                                        <h2>
+                                            <a href="{{ route('buddies.index') }}">{{ $buddy->buddy->name }}</a> is nu
+                                            <a href="{{ route('buddies.show', ['buddy' => $buddy->id]) }}">Buddy</a> van
+                                            <a href="{{ route('buddies.index') }}">{{ $buddy->user->name }}</a>
+                                            <span>Toegevoegd op {{ $buddy->created_at->toFormattedDateString() }}</span>
+                                        </h2>
+                                        <p>
+                                            {{ $buddy->relation }}
+                                        </p>
+                                    </div>
+                                @else
+                                    <div class="timeline-icon">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-heart fa-stack-1x bg-love"></i>
+                                            <i class="fa fa-ban fa-stack-2x text-danger"></i>
                                         </span>
-                                    </h2>
-                                    <p>
-                                        {{ $buddy->buddy->name }}: {{ $buddy->relation }}
-                                    </p>
-                                </div>
+                                    </div>
+                                    <div class="timeline-label">
+                                        <h2>
+                                            <a href="{{ route('buddies.index') }}">{{ $buddy->buddy->name }}</a> is geen
+                                            <a href="{{ route('buddies.show', ['buddy' => $buddy->id]) }}">Buddy</a> meer van
+                                            <a href="{{ route('buddies.index') }}">{{ $buddy->user->name }}</a>
+                                            <span>Verwijderd op {{ $buddy->created_at->toFormattedDateString() }}</span>
+                                        </h2>
+                                    </div>
+                                @endif
                             </div>
                         </article>
                     @endforeach
@@ -75,7 +93,8 @@
                             <th>Naam</th>
                             <th>Buddy</th>
                         </tr>
-                        @foreach ($buddies as $buddy)
+                        @foreach ($buddies->filter(function($v,$k){return $v['object']->deleted_at == null;}) as $buddyData)
+                        <?php $buddy = $buddyData['object']; ?>
                             <tr>
                                 <td>{{ $buddy->user->name }}</td>
                                 <td>{{ $buddy->buddy->name }}</td>
