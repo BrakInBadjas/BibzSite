@@ -19,7 +19,7 @@ class AdtjeController extends Controller
      */
     public function index()
     {
-        $adtjes = Adtje::latest()->get();
+        $adtjes = Adtje::latest()->paginate(15);
 
         return view('adtjes.adtjes', ['adtjes' => $adtjes]);
     }
