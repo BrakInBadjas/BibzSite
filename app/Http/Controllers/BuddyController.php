@@ -19,7 +19,7 @@ class BuddyController extends Controller
      */
     public function index()
     {
-        $buddies = Buddy::latest()->get();
+        $buddies = Buddy::latest()->paginate(15);
 
         return view('buddies.buddies', ['buddies' => $buddies]);
     }
