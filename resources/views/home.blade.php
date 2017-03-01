@@ -32,6 +32,17 @@
                 </div>
             </div>
         </div>
+        <div class="col-sm-6 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Random kat</h3>
+                </div>
+                <div class="panel-body">
+                    <img src="http://thecatapi.com/api/images/get?format=src&type=gif" width="100%">
+                </div>
+            </div>
+        </div>
+        
     </div>
 </div>
 @endsection
