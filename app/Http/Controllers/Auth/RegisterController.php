@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Session;
-use App\User;
 use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -80,24 +80,26 @@ class RegisterController extends Controller
 
     public function waiting(Request $request)
     {
-        if($request->user()->verified){
+        if ($request->user()->verified) {
             return redirect(route('home'));
         }
+
         return view('auth.waiting');
     }
 
     public function verify(Request $request, $token)
     {
         $user = $request->user();
-        if($user != null && $user->verified){
+        if ($user != null && $user->verified) {
             return redirect(route('home'));
         }
 
-        $user = User::where('email_token',$token)->first();
-        if($user != null){
+        $user = User::where('email_token', $token)->first();
+        if ($user != null) {
             Session::put('verification_succes', 'Je email is geverifieerd!');
             $user->verify();
         }
+
         return redirect('login');
     }
 }

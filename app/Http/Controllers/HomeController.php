@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Quote;
 use Adtje;
 use Carbon\Carbon;
+use Quote;
 
 class HomeController extends Controller
 {
@@ -28,9 +27,10 @@ class HomeController extends Controller
     {
         $newAdtjes = Adtje::where('created_at', '>=', Carbon::today())->count();
         $newQuotes = Quote::where('created_at', '>=', Carbon::today())->count();
+
         return view('home')->with([
             'new_adtjes'=> $newAdtjes,
-            'new_quotes'=> $newQuotes
+            'new_quotes'=> $newQuotes,
         ]);
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class MakeBuddiesSoftdeletable extends Migration
 {
@@ -26,7 +26,7 @@ class MakeBuddiesSoftdeletable extends Migration
     public function down()
     {
         Schema::table('buddies', function (Blueprint $table) {
-             $table->dropColumn(['deleted_at']);
+            $table->dropColumn(['deleted_at']);
         });
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class UserMailVerification extends Migration
 {
@@ -29,7 +29,7 @@ class UserMailVerification extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-             $table->dropColumn(['verified', 'email_token']);
+            $table->dropColumn(['verified', 'email_token']);
         });
     }
 }

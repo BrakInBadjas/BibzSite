@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Adtje;
 use App\User;
-
+use Auth;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
-use Auth;
 
 class AdtjeController extends Controller
 {
@@ -44,12 +43,12 @@ class AdtjeController extends Controller
     {
         $messages = [
             'id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'reason.required' => 'Je moet een reden ingeven!'
+            'reason.required' => 'Je moet een reden ingeven!',
         ];
 
         $v = Validator::make($request->all(), [
             'id' => 'exists:users',
-            'reason' => 'required'
+            'reason' => 'required',
         ], $messages);
 
         $v->after(function ($v) use ($request) {
@@ -79,7 +78,7 @@ class AdtjeController extends Controller
                 $adtje->user_id = $buddy->user->id;
             }
             $adtje->added_by = auth()->user()->id;
-            $adtje->reason = 'Fucked by ' . User::find($request->id)->name;
+            $adtje->reason = 'Fucked by '.User::find($request->id)->name;
             $adtje->save();
         }
 
