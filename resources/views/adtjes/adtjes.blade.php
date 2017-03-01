@@ -59,6 +59,9 @@
                         </div>
                     </article>
                 </div>
+                <div class="text-center">
+                    {{ $adtjes->links() }}
+                </div>
             </div>
             <div class="col-md-4">
                 @if (Auth::user()->adtjes()->open()->count() != 0)
