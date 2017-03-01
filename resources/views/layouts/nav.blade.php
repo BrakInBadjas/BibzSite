@@ -23,7 +23,11 @@
                 @if (Auth::check())
                     <li class="dropdown {{ (strpos(Request::path(), 'adtjes') !== false) ? 'active' : ''}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Adtjes <span class="caret"></span>
+                            Adtjes
+                            @if(($count = Adtje::where('user_id', Auth::user()->id)->open()->count()) > 0)
+                                <span class="badge">{{$count}}</span>
+                            @endif
+                            <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">

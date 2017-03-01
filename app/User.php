@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Mail\ResetPassword as PasswordResetMailable;
+
+use Mail;
 
 use App\Adtje;
 use App\Quote;
@@ -68,5 +71,16 @@ class User extends Authenticatable
 
     public function allBuddies() {
         return $this->myBuddies->merge($this->buddyOf);
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        Mail::to($this->email)->send(new PasswordResetMailable($this, $token));
     }
 }
