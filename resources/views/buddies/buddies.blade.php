@@ -29,6 +29,17 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">
+                    @if($buddies->currentPage() > 1)
+                    <article class="timeline-entry">
+                        <a href="{{url($buddies->previousPageUrl())}}">
+                            <div class="timeline-entry-inner timeline-entry-pagination-up">
+                                <div class="timeline-icon">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    @endif
                     @foreach ($buddies as $buddyData)
                     <?php $buddy = $buddyData['object']; ?>
                         <article class="timeline-entry">
@@ -67,19 +78,28 @@
                             </div>
                         </article>
                     @endforeach
+                    @if(!$buddies->hasMorePages())
                     <article class="timeline-entry begin">
                         <div class="timeline-entry-inner">
                             <div class="timeline-icon">
-                                <i class="entypo-flight"></i>
+                                <i class="fa fa-server" aria-hidden="true"></i>
                             </div>
                             <div class="timeline-label">
                                 <p>Website gemaakt</p>
                             </div>
                         </div>
                     </article>
-                </div>
-                <div class="text-center">
-                    {{ $buddies->links() }}
+                    @else
+                    <article class="timeline-entry">
+                        <a href="{{url($buddies->nextPageUrl())}}">
+                            <div class="timeline-entry-inner timeline-entry-pagination-down">
+                                <div class="timeline-icon">
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    @endif
                 </div>
             </div>
             <div class="col-md-4">
