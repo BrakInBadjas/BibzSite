@@ -2,38 +2,25 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Buddy</div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            Wie:
-                        </div>
-                        <div class="col-md-8">
-                            {{ $buddy->user->name }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            Met:
-                        </div>
-                        <div class="col-md-8">
-                            {{ $buddy->buddy->name }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            Waarom:
-                        </div>
-                        <div class="col-md-8">
-                            {{ $buddy->relation }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="jumbotron">
+        <h1>{{ $buddy->buddy->name }} buddy van {{ $buddy->user->name }}</h1>
+        <span>Sinds {{ $buddy->created_at->toFormattedDateString() }}</span>
+        @if($buddy->broken())
+            <br /><span>Tot {{ $buddy->deleted_at->toFormattedDateString() }}</span>
+        @endif
+        <hr>
+        <p class="lead">{{ $buddy->relation }}</p>
     </div>
+    @if(! $buddy->broken())
+    <div class="row">
+        <a class="btn btn-lg btn-danger btn-block" href="#"
+            role="button" onclick="event.preventDefault();
+                    document.getElementById('remove-buddy-form').submit();">Verbreek Buddyschap</a>
+    </div>
+    @endif
+    <form class="form-inline" id="remove-buddy-form" action="{{ route('buddies.destroy', ['$buddy' => $buddy->id]) }}" method="POST" style="display: none">
+        {{ csrf_field() }}
+        <input name="_method" type="hidden" value="DELETE">
+    </form>
 </div>
 @endsection
