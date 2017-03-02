@@ -26,4 +26,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('quotes', 'QuoteController');
 
     Route::resource('buddies', 'BuddyController');
+
+    Route::resource('profile', 'ProfileController', ['only' => [
+            'show',
+            'edit',
+            'update',
+        ]]);
 });

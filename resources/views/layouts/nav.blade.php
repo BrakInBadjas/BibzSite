@@ -75,9 +75,15 @@
 
                         <ul class="dropdown-menu" role="menu">
                             <li>
+                                <a href="{{route('profile.show', ['id' => Auth::user()->id])}}"><i class="fa fa-btn  fa-user fa-fw" aria-hidden="true"></i>
+                                    Profiel
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
+                                             document.getElementById('logout-form').submit();"><i class="fa fa-btn  fa-sign-out fa-fw" aria-hidden="true"></i>
                                     Logout
                                 </a>
 
