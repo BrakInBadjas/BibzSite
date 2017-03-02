@@ -28,10 +28,10 @@
                                 <div class="timeline-label">
                                     <h2>
                                         <a href="{{ route('quotes.show', ['quote' => $quote->id]) }}">Quote</a> van
-                                        <a href="{{ route('quotes.index') }}">{{ $quote->user->name }}</a>
+                                        <a href="{{ route('profile.show', ['id' => $quote->user->id]) }}">{{ $quote->user->name }}</a>
                                         <span>{{ $quote->created_at->toFormattedDateString() }}</span>
                                     </h2>
-                                    <p>"{{ $quote->quote }}"</p>
+                                    <p>{{ $quote->quote }}</p>
                                 </div>
                             </div>
                         </article>
@@ -46,6 +46,9 @@
                             </div>
                         </div>
                     </article>
+                </div>
+                <div class="text-center">
+                    {{ $quotes->links() }}
                 </div>
             </div>
             <div class="col-md-4">

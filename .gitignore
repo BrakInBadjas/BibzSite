@@ -4,8 +4,9 @@
 Homestead.yaml
 Homestead.json
 .env*
-!.env.gitlab-ci
+!.env.travis
 !.env.example
 /.idea
 .DS_Store
 homestead
+BibzSite.iml

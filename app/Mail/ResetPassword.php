@@ -7,24 +7,31 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EmailVerification extends Mailable
+class ResetPassword extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
-     * The user instance.
+     * The User instance.
      * @var User
      */
     public $user;
+
+    /**
+     * The token.
+     * @var Token
+     */
+    public $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, String $token)
     {
         $this->user = $user;
+        $this->token = $token;
     }
 
     /**
@@ -34,6 +41,6 @@ class EmailVerification extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.email-verification');
+        return $this->view('mail.password-reset');
     }
 }

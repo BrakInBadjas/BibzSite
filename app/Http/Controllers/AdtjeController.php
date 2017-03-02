@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Adtje;
 use App\User;
-
+use Auth;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
-use Auth;
 
 class AdtjeController extends Controller
 {
@@ -19,7 +18,7 @@ class AdtjeController extends Controller
      */
     public function index()
     {
-        $adtjes = Adtje::latest()->get();
+        $adtjes = Adtje::latest()->paginate(15);
 
         return view('adtjes.adtjes', ['adtjes' => $adtjes]);
     }
@@ -44,12 +43,12 @@ class AdtjeController extends Controller
     {
         $messages = [
             'id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'reason.required' => 'Je moet een reden ingeven!'
+            'reason.required' => 'Je moet een reden ingeven!',
         ];
 
         $v = Validator::make($request->all(), [
             'id' => 'exists:users',
-            'reason' => 'required'
+            'reason' => 'required',
         ], $messages);
 
         $v->after(function ($v) use ($request) {
@@ -79,7 +78,7 @@ class AdtjeController extends Controller
                 $adtje->user_id = $buddy->user->id;
             }
             $adtje->added_by = auth()->user()->id;
-            $adtje->reason = 'Fucked by ' . User::find($request->id)->name;
+            $adtje->reason = 'Fucked by '.User::find($request->id)->name;
             $adtje->save();
         }
 
@@ -97,7 +96,7 @@ class AdtjeController extends Controller
      */
     public function show(Adtje $adtje)
     {
-        return redirect()->route('adtjes.index');
+        return view('adtjes.show', ['adtje' => $adtje]);
     }
 
     /**
@@ -108,7 +107,7 @@ class AdtjeController extends Controller
      */
     public function edit(Adtje $adtje)
     {
-        return redirect()->route('adtjes.index');
+        return view('adtjes.show', ['adtje' => $adtje]);
     }
 
     /**
@@ -120,6 +119,9 @@ class AdtjeController extends Controller
      */
     public function update(Request $request, Adtje $adtje)
     {
+        $adtje->reason = $request->reason;
+        $adtje->save();
+
         return redirect()->route('adtjes.index');
     }
 
@@ -131,6 +133,8 @@ class AdtjeController extends Controller
      */
     public function destroy(Adtje $adtje)
     {
+        $adtje->delete();
+
         return redirect()->route('adtjes.index');
     }
 

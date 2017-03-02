@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserMailVerification extends Migration
+class MakeBuddiesSoftdeletable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class UserMailVerification extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('verified')->default(0);
-            $table->string('email_token')->nullable();
-
-            $table->unique('email_token');
+        Schema::table('buddies', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -28,8 +25,8 @@ class UserMailVerification extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['verified', 'email_token']);
+        Schema::table('buddies', function (Blueprint $table) {
+            $table->dropColumn(['deleted_at']);
         });
     }
 }

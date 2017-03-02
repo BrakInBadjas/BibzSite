@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Buddy;
 use App\User;
-
 use Illuminate\Http\Request;
-use Session;
+use Illuminate\Pagination\LengthAwarePaginator as LengthAwarePaginator;
+use Illuminate\Pagination\Paginator as Paginator;
 use Validator;
-use Auth;
 
 class BuddyController extends Controller
 {
@@ -19,7 +18,22 @@ class BuddyController extends Controller
      */
     public function index()
     {
-        $buddies = Buddy::latest()->get();
+        $buddies = Buddy::withTrashed()->get()->map(function ($buddy, $key) {
+            return ['object' => $buddy, 'event_date' => $buddy->created_at, 'break' => false];
+        });
+
+        $buddies = $buddies->merge(Buddy::onlyTrashed()->get()->map(function ($buddy, $key) {
+            return ['object' => $buddy, 'event_date' => $buddy->deleted_at, 'break' => true];
+        }));
+
+        $buddies = $buddies->sortByDesc('event_date');
+
+        $buddies = new LengthAwarePaginator(
+            $buddies->forPage(Paginator::resolveCurrentPage(), 15),
+            $buddies->count(), 15,
+            Paginator::resolveCurrentPage(),
+            ['path' => Paginator::resolveCurrentPath()]
+        );
 
         return view('buddies.buddies', ['buddies' => $buddies]);
     }
@@ -45,18 +59,18 @@ class BuddyController extends Controller
         $messages = [
             'user_id.exists' => 'De opgegeven gebruiker bestaat niet!',
             'buddy_id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'relation.required' => 'Je moet een relatie ingeven!'
+            'relation.required' => 'Je moet een relatie ingeven!',
         ];
 
         $v = Validator::make($request->all(), [
             'user_id' => 'exists:users,id',
             'buddy_id' => 'exists:users,id',
-            'relation' => 'required'
+            'relation' => 'required',
         ], $messages);
 
         $v->after(function ($v) use ($request) {
             $buddies = User::find($request->user_id)->allBuddies();
-            if ($buddies->where('user_id', $request->user_id)->count() > 0
+            if ($buddies->where('user_id', $request->buddy_id)->count() > 0
                 || $buddies->where('buddy_id', $request->buddy_id)->count() > 0) {
                 $v->errors()->add('duplicate', 'Deze twee zijn al drinking buddies!');
             }
@@ -86,9 +100,11 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function show(Buddie $buddie)
+    public function show($buddy)
     {
-        return view('buddies.show', ['buddie' => $buddie]);
+        $buddy = Buddy::withTrashed()->findOrFail($buddy);
+
+        return view('buddies.show', ['buddy' => $buddy]);
     }
 
     /**
@@ -97,9 +113,9 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function edit(Buddie $buddie)
+    public function edit(Buddy $buddy)
     {
-        return view('buddies.edit');
+        return redirect()->route('buddies.index');
     }
 
     /**
@@ -109,7 +125,7 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Buddie $buddie)
+    public function update(Request $request, Buddy $buddy)
     {
         return redirect()->route('buddies.index');
     }
@@ -120,9 +136,9 @@ class BuddyController extends Controller
      * @param  \App\Buddie  $buddie
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Buddie $buddie)
+    public function destroy(Buddy $buddy)
     {
-        $buddie->delete();
+        $buddy->delete();
 
         return redirect()->route('buddies.index');
     }

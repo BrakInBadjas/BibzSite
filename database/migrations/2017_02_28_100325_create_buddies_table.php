@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBuddiesTable extends Migration
 {
@@ -19,7 +19,7 @@ class CreateBuddiesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('buddy_id');
             $table->foreign('buddy_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(array('user_id', 'buddy_id'));
+            $table->unique(['user_id', 'buddy_id']);
             $table->text('relation');
             $table->timestamps();
         });

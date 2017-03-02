@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UserMailVerification extends Migration
+class AddInfoToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,8 @@ class UserMailVerification extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->tinyInteger('verified')->default(0);
-            $table->string('email_token')->nullable();
-
-            $table->unique('email_token');
+            $table->string('address')->nullable();
+            $table->string('mobile_number')->nullable();
         });
     }
 
@@ -29,7 +27,7 @@ class UserMailVerification extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['verified', 'email_token']);
+            $table->dropColumn(['address', 'mobile_number']);
         });
     }
 }

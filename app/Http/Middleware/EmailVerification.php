@@ -16,7 +16,7 @@ class EmailVerification
      */
     public function handle($request, Closure $next)
     {
-        if(Auth::user()->verified){
+        if (Auth::user()->verified) {
             return $next($request);
         }
 

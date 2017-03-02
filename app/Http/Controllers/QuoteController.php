@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Quote;
-
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -17,7 +16,7 @@ class QuoteController extends Controller
      */
     public function index()
     {
-        $quotes = Quote::latest()->get();
+        $quotes = Quote::latest()->paginate(15);
 
         return view('quotes.quotes', ['quotes' => $quotes]);
     }
@@ -42,12 +41,12 @@ class QuoteController extends Controller
     {
         $messages = [
             'id.exists' => 'De opgegeven gebruiker bestaat niet!',
-            'quote.required' => 'Je moet een quote ingeven!'
+            'quote.required' => 'Je moet een quote ingeven!',
         ];
 
         Validator::make($request->all(), [
             'id' => 'exists:users',
-            'quote' => 'required'
+            'quote' => 'required',
         ], $messages)->validate();
 
         $quote = new Quote;
@@ -64,23 +63,23 @@ class QuoteController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
     public function show(Quote $quote)
     {
-        return redirect()->route('quotes.index');
+        return view('quotes.show', ['quote' => $quote]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Quote  $quote
      * @return \Illuminate\Http\Response
      */
     public function edit(Quote $quote)
     {
-        return redirect()->route('quotes.index');
+        return view('quotes.show', ['quote' => $quote]);
     }
 
     /**
@@ -92,6 +91,9 @@ class QuoteController extends Controller
      */
     public function update(Request $request, Quote $quote)
     {
+        $quote->quote = $request->quote;
+        $quote->save();
+
         return redirect()->route('quotes.index');
     }
 
@@ -103,6 +105,8 @@ class QuoteController extends Controller
      */
     public function destroy(Quote $quote)
     {
+        $quote->delete();
+
         return redirect()->route('quotes.index');
     }
 }

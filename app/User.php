@@ -2,12 +2,10 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Mail\ResetPassword as PasswordResetMailable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
-use App\Adtje;
-use App\Quote;
-use App\Buddy;
+use Illuminate\Notifications\Notifiable;
+use Mail;
 
 class User extends Authenticatable
 {
@@ -19,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'email_token'
+        'name', 'email', 'password', 'email_token',
     ];
 
     /**
@@ -41,7 +39,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * Verifies the current user
+     * Verifies the current user.
      */
     public function verify()
     {
@@ -50,23 +48,39 @@ class User extends Authenticatable
         $this->save();
     }
 
-    public function adtjes() {
+    public function adtjes()
+    {
         return $this->hasMany(Adtje::class);
     }
 
-    public function quotes() {
+    public function quotes()
+    {
         return $this->hasMany(Quote::class);
     }
 
-    public function myBuddies() {
+    public function myBuddies()
+    {
         return $this->hasMany(Buddy::class);
     }
 
-    public function buddyOf() {
+    public function buddyOf()
+    {
         return $this->hasMany(Buddy::class, 'buddy_id');
     }
 
-    public function allBuddies() {
+    public function allBuddies()
+    {
         return $this->myBuddies->merge($this->buddyOf);
+    }
+
+    /**
+     * Send the password reset notification.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token)
+    {
+        Mail::to($this->email)->send(new PasswordResetMailable($this, $token));
     }
 }

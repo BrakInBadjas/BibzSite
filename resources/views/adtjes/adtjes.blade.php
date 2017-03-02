@@ -38,9 +38,9 @@
                                 <div class="timeline-label">
                                     <h2>
                                         <a href="{{ route('adtjes.show', ['adtje' => $adtje->id]) }}">Adtje</a> voor
-                                        <a href="{{ route('adtjes.index') }}">{{ $adtje->user->name }}</a>
+                                        <a href="{{ route('profile.show', ['id' => $adtje->user->id]) }}">{{ $adtje->user->name }}</a>
                                         <span>Uitgedeeld op {{ $adtje->created_at->toFormattedDateString() }} door
-                                            <a href="{{ route('adtjes.index') }}">{{ $adtje->creator->name }}</a>
+                                            <a href="{{ route('profile.show', ['id' => $adtje->creator->id]) }}">{{ $adtje->creator->name }}</a>
                                         </span>
                                     </h2>
                                     <p>{{ $adtje->reason }}</p>
@@ -58,6 +58,9 @@
                             </div>
                         </div>
                     </article>
+                </div>
+                <div class="text-center">
+                    {{ $adtjes->links() }}
                 </div>
             </div>
             <div class="col-md-4">
@@ -81,7 +84,7 @@
                         </tr>
                         @foreach (User::all() as $user)
                             <tr>
-                                <td>{{ $user->name }}</td>
+                                <td><a href="{{ route('profile.show', ['id' => $user->id]) }}"><p class="text-muted">{{ $user->name }}</p></a></td>
                                 <td>{{ $user->adtjes->count() }}</td>
                                 <td>{{ $user->adtjes()->open()->count() }}</td>
                             </tr>
