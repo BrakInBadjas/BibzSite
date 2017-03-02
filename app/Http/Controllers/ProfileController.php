@@ -2,25 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\User;
 use Auth;
 
 class ProfileController extends Controller
 {
-    public function index($id) {
+    public function index($id)
+    {
         if ($id == "me") {
-            $user = User::where('id', Auth::user()->id);
+            $user = User::where('id', Auth::user()->id)->firstOrFail();
         } else {
-            $user = User::where('id', $id);
+            $user = User::where('id', $id)->firstOrFail();
         }
 
 
-        if (!$user->exists()) {
+        if (! $user->exists()) {
             return redirect()->route('home');
         }
 
-        return view('profile.profile', ['user' => $user->first()]);
+        return view('profile.profile', ['user' => $user]);
     }
 }
