@@ -4,7 +4,7 @@
 <div class="container">
 
     <div class="jumbotron">
-        <h1 class="display-3">Quote van {{ $quote->user->name }}</h1>
+        <h1 class="display-3">Quote van <a href="{{route('profile', ['id' => $quote->user->id])}}">{{ $quote->user->name }}</a></h1>
         <span>Gezegd op {{ $quote->created_at->toFormattedDateString() }}</span>
         <hr>
         <p class="lead" id="quote-active">{{ $quote->quote }}</p>

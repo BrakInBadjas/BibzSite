@@ -4,9 +4,9 @@
 <div class="container">
 
     <div class="jumbotron">
-        <h1 class="display-3">Adtje voor {{ $adtje->user->name }}</h1>
+        <h1 class="display-3">Adtje voor <a href="{{ route('profile', ['id' => $adtje->user->id]) }}">{{ $adtje->user->name }}</a></h1>
         <span>Uitgedeeld op {{ $adtje->created_at->toFormattedDateString() }} door
-            <a href="{{ route('adtjes.index') }}">{{ $adtje->creator->name }}</a>
+            <a href="{{ route('profile', ['id' => $adtje->creator->id]) }}">{{ $adtje->creator->name }}</a>
         </span>
         <hr>
         <p class="lead" id="reason-active">{{ $adtje->reason }}</p>
