@@ -9,7 +9,6 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-
             <!-- Branding Image -->
             <a class="navbar-brand" href="{{ route('index') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -36,17 +35,6 @@
                         </ul>
                     </li>
 
-                    <li class="dropdown {{ (strpos(Request::path(), 'buddies') !== false) ? 'active' : ''}}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Drinking Buddies <span class="caret"></span>
-                        </a>
-
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('buddies.index') }}">Drinking Buddies</a></li>
-                            <li><a href="{{ route('buddies.create') }}">Drinking Buddy Toevoegen</a></li>
-                        </ul>
-                    </li>
-
                     <li class="dropdown {{ (strpos(Request::path(), 'quotes') !== false) ? 'active' : ''}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             Quotes <span class="caret"></span>
@@ -57,6 +45,17 @@
                             <li><a href="{{ route('quotes.create') }}">Quote Toevoegen</a></li>
                         </ul>
                     </li>
+
+                <li class="dropdown {{ (strpos(Request::path(), 'buddies') !== false) ? 'active' : ''}}">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        Drinking Buddies <span class="caret"></span>
+                    </a>
+
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="{{ route('buddies.index') }}">Drinking Buddies</a></li>
+                        <li><a href="{{ route('buddies.create') }}">Drinking Buddy Toevoegen</a></li>
+                    </ul>
+                </li>
 
 
                 @endif
