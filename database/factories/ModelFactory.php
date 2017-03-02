@@ -11,7 +11,9 @@
 |
 */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/*
+ * User Factory
+ */
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
@@ -19,6 +21,30 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'remember_token' => 'faker_'.str_random(10),
+        'email_token' => 'faker_'.str_random(20),
+    ];
+});
+
+$factory->state(App\User::class, 'email_verified', function ($faker) {
+    return [
+        'verified' => true,
+        'email_token' => null,
+    ];
+});
+
+/*
+ * Adtje Factory
+ */
+
+$factory->define(App\Adtje::class, function (Faker\Generator $faker) {
+    static $password;
+
+    return [
+        'name' => $faker->name,
+        'email' => $faker->unique()->safeEmail,
+        'password' => $password ?: $password = bcrypt('secret'),
+        'remember_token' => 'faker_'.str_random(10),
+        'email_token' => 'faker_'.str_random(20),
     ];
 });
