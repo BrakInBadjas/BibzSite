@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="jumbotron">
-        <h1><a href="{{ route('profile', [$buddy->buddy->id]) }}">{{ $buddy->buddy->name }}</a> buddy van <a href="{{ route('profile', [$buddy->user->id]) }}">{{ $buddy->user->name }}</a></h1>
+        <h1><a href="{{ route('profile.show', [$buddy->buddy->id]) }}">{{ $buddy->buddy->name }}</a> buddy van <a href="{{ route('profile.show', [$buddy->user->id]) }}">{{ $buddy->user->name }}</a></h1>
         <span>Sinds {{ $buddy->created_at->toFormattedDateString() }}</span>
         @if($buddy->broken())
             <br /><span>Tot {{ $buddy->deleted_at->toFormattedDateString() }}</span>

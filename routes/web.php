@@ -27,5 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('buddies', 'BuddyController');
 
-    Route::get('/profile/{id}', ['as' => 'profile', 'uses' => 'ProfileController@index']);
+    Route::resource('profile', 'ProfileController', ['only' => [
+            'show',
+            'edit',
+            'update',
+        ]]);
 });
