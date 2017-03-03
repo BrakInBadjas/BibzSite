@@ -19,6 +19,17 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">
+                    @if($quotes->currentPage() > 1)
+                    <article class="timeline-entry">
+                        <a href="{{url($quotes->previousPageUrl())}}">
+                            <div class="timeline-entry-inner timeline-entry-pagination-up">
+                                <div class="timeline-icon">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    @endif
                     @foreach ($quotes as $quote)
                         <article class="timeline-entry">
                             <div class="timeline-entry-inner">
@@ -36,19 +47,28 @@
                             </div>
                         </article>
                     @endforeach
+                    @if(!$quotes->hasMorePages())
                     <article class="timeline-entry begin">
                         <div class="timeline-entry-inner">
                             <div class="timeline-icon">
-                                <i class="entypo-flight"></i>
+                                <i class="fa fa-server" aria-hidden="true"></i>
                             </div>
                             <div class="timeline-label">
                                 <p>Website gemaakt</p>
                             </div>
                         </div>
                     </article>
-                </div>
-                <div class="text-center">
-                    {{ $quotes->links() }}
+                    @else
+                    <article class="timeline-entry">
+                        <a href="{{url($quotes->nextPageUrl())}}">
+                            <div class="timeline-entry-inner timeline-entry-pagination-down">
+                                <div class="timeline-icon">
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    @endif
                 </div>
             </div>
             <div class="col-md-4">
