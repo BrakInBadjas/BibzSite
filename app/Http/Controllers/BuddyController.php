@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as LengthAwarePaginator;
 use Illuminate\Pagination\Paginator as Paginator;
+use Session;
 use Validator;
 
 class BuddyController extends Controller
@@ -91,6 +92,9 @@ class BuddyController extends Controller
         $buddies->relation = $request->relation;
         $buddies->save();
 
+        Session::flash('buddy_added->user->name', User::find($request->user_id)->name);
+        Session::flash('buddy_added->buddy->name', User::find($request->buddy_id)->name);
+
         return redirect()->route('buddies.index');
     }
 
@@ -139,6 +143,9 @@ class BuddyController extends Controller
     public function destroy(Buddy $buddy)
     {
         $buddy->delete();
+
+        Session::flash('buddy_deleted->user->name', User::find($buddy->user_id)->name);
+        Session::flash('buddy_deleted->buddy->name', User::find($buddy->buddy_id)->name);
 
         return redirect()->route('buddies.index');
     }

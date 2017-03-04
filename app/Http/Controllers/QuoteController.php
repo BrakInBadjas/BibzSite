@@ -54,8 +54,8 @@ class QuoteController extends Controller
         $quote->quote = $request->quote;
         $quote->save();
 
-        Session::flash('quote_added', $quote->quote);
-        Session::flash('quote_added_for', $quote->user->name);
+        Session::flash('quote_added->name', $quote->user->name);
+        Session::flash('quote_added->quote', $quote->quote);
 
         return redirect()->route('quotes.index');
     }
@@ -105,6 +105,9 @@ class QuoteController extends Controller
      */
     public function destroy(Quote $quote)
     {
+        Session::flash('quote_deleted->name', $quote->user->name);
+        Session::flash('quote_deleted->quote', $quote->quote);
+
         $quote->delete();
 
         return redirect()->route('quotes.index');

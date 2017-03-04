@@ -6,24 +6,16 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('buddy_added'))
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Buddy voor <a href="{{ route('profile.show', ['id' => Session::get('buddy_deleted')->user->id]) }}">{{ Session::get('buddy_deleted')->user->name }}</a> succesvol toegevoegd</h3>
+        @if(Session::has('buddy_added->user->name'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ Session::get('buddy_added->buddy->name') }} is nu Buddy van {{ Session::get('buddy_added->user->name') }}!
             </div>
-            <div class="panel-body">
-                <a href="{{ route('profile.show', ['id' => Session::get('buddy_deleted')->buddy->id]) }}">{{ Session::get('buddy_added')->buddy->name }}</a>: {{ Session::get('buddy_added')->relation }}
-            </div>
-        </div>
         @endif
-        @if (Session::has('buddy_deleted'))
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Buddy van <a href="{{ route('profile.show', ['id' => Session::get('buddy_deleted')->user->id]) }}">{{ Session::get('buddy_deleted')->user->name }}</a> succesvol verwijderd</h3>
-                </div>
-                <div class="panel-body">
-                    <a href="{{ route('profile.show', ['id' => Session::get('buddy_deleted')->buddy->id]) }}">{{ Session::get('buddy_deleted')->buddy->name }}</a>: {{ Session::get('buddy_deleted')->relation }}
-                </div>
+        @if (Session::has('buddy_deleted->user->name'))
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{ Session::get('buddy_deleted->buddy->name') }} is niet langer Buddy van {{ Session::get('buddy_deleted->user->name') }}!
             </div>
         @endif
         <div class="row">
