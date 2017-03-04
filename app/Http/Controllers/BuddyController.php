@@ -7,8 +7,9 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as LengthAwarePaginator;
 use Illuminate\Pagination\Paginator as Paginator;
-use Validator;
+
 use Session;
+use Validator;
 
 class BuddyController extends Controller
 {
