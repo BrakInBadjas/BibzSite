@@ -6,14 +6,18 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('quote_added'))
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Quote van {{ Session::get('quote_added_for') }} succesvol toegevoegd</h3>
-                </div>
-                <div class="panel-body">
-                    {{ Session::get('quote_added') }}
-                </div>
+        @if(Session::has('quote_added->name'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>Quote van {{ Session::get('quote_added->name') }} succesvol toegevoegd!</p>
+                Quote: {{ Session::get('quote_added->quote') }}
+            </div>
+        @endif
+        @if(Session::has('quote_deleted->name'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>Quote van {{ Session::get('quote_deleted->name') }} succesvol verwijderd!</p>
+                Quote: {{ Session::get('quote_deleted->quote') }}
             </div>
         @endif
         <div class="row">

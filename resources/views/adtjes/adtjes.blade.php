@@ -6,24 +6,24 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('collected_adtje'))
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Adtje van {{ Session::get('collected_adtje') }} succesvol geïnt</h3>
-                </div>
-                <div class="panel-body">
-                    {{ Session::get('collected_adtje_reason') }}
-                </div>
+        @if(Session::has('adtje_added->name'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>Adtje voor {{ Session::get('adtje_added->name') }} succesvol toegevoegd!</p>
+                Reden: {{ Session::get('adtje_added->reason') }}
             </div>
         @endif
-        @if (Session::has('added_adtje'))
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Adtje voor {{ Session::get('added_adtje_for') }} succesvol toegevoegd</h3>
-                </div>
-                <div class="panel-body">
-                    {{ Session::get('added_adtje') }}
-                </div>
+        @if(Session::has('adtje_deleted->name'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>Adtje voor {{ Session::get('adtje_deleted->name') }} succesvol verwijderd!</p>
+                Reden: {{ Session::get('adtje_deleted->reason') }}
+            </div>
+        @endif
+        @if(Session::has('adtje_collected->date'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Adtje succesvol geïnt
             </div>
         @endif
         <div class="row">

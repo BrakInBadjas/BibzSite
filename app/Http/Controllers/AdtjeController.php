@@ -82,8 +82,8 @@ class AdtjeController extends Controller
             $adtje->save();
         }
 
-        Session::flash('added_adtje', $adtje->reason);
-        Session::flash('added_adtje_for', $adtje->user->name);
+        Session::flash('adtje_added->name', $adtje->user->name);
+        Session::flash('adtje_added->reason', $adtje->reason);
 
         return redirect()->route('adtjes.index');
     }
@@ -135,6 +135,9 @@ class AdtjeController extends Controller
     {
         $adtje->delete();
 
+        Session::flash('adtje_deleted->name', $adtje->user->name);
+        Session::flash('adtje_deleted->reason', $adtje->reason);
+
         return redirect()->route('adtjes.index');
     }
 
@@ -145,8 +148,8 @@ class AdtjeController extends Controller
         $adtje->collected = true;
         $adtje->save();
 
-        Session::flash('collected_adtje_reason', $adtje->reason);
-        Session::flash('collected_adtje', $adtje->created_at->toFormattedDateString());
+        Session::flash('adtje_collected->date', $adtje->created_at->toFormattedDateString());
+        Session::flash('adtje_collected->reason', $adtje->reason);
 
         return redirect()->route('adtjes.index');
     }
