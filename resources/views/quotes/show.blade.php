@@ -14,8 +14,9 @@
             <a class="btn btn-lg btn-primary btn-block" id="edit-active" href="#" onclick="editQuote(true)" role="button">Wijzigen</a>
         </div>
         <div class="col-md-6">
-            <a class="btn btn-lg btn-danger btn-block" id="delete-active" href="#"
-                role="button" onclick="deleteQuote()">Verwijderen</a>
+            <button type="button" id="delete-active" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#deleteQuoteModal">
+                Verwijderen
+            </button>
         </div>
     </div>
     <div id="hidden" style="display: none">
@@ -34,12 +35,33 @@
 
         <a class="btn btn-lg btn-default btn-block" id="cancel" href="#" onclick="cancelEdit()" role="button">Annuleren</a>
 
-        <a class="btn btn-lg btn-danger btn-block" id="delete" href="#"
-            role="button" onclick="deleteQuote()">Verwijderen</a>
+        <button type="button" id="delete" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#deleteQuoteModal">
+            Verwijderen
+        </button>
 
         <a class="btn btn-lg btn-primary btn-block" id="edit" href="#" onclick="editQuote(true)" role="button">Wijzigen</a>
 
         <p class="lead" id="quote">{{ $quote->quote }}</p>
+    </div>
+
+    <!-- Popup -->
+    <div class="modal fade" id="deleteQuoteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Quote verwijderen</h4>
+          </div>
+          <div class="modal-body">
+            <p>Weet je zeker dat je dit wilt doen?</p>
+            <p>Dit kan niet ongedaan gemaakt worden</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Annuleren</button>
+            <button type="button" class="btn btn-danger" onclick="deleteQuote()">Verwijderen</button>
+          </div>
+        </div>
+      </div>
     </div>
 
 
