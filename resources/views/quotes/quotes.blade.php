@@ -85,7 +85,7 @@
                             <th>Naam</th>
                             <th>Quotes</th>
                         </tr>
-                        @foreach (User::all() as $user)
+                        @foreach (User::with('quotes')->get()->sortByDesc(function($user) { return $user->quotes()->count(); }) as $user)
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->quotes->count() }}</td>
