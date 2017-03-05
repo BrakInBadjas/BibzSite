@@ -22,6 +22,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/adtjes/collect', ['as' => 'adtjes.collect', 'uses' => 'AdtjeController@collect']);
     Route::resource('adtjes', 'AdtjeController');
+    Route::group(['prefix' => '/adtjes/{adtje}', 'as' => 'adtje.'], function () {
+        Route::resource('validation', 'AdtjeValidationController');
+    });
 
     Route::resource('quotes', 'QuoteController');
 
