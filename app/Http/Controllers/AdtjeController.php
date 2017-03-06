@@ -18,7 +18,7 @@ class AdtjeController extends Controller
      */
     public function index()
     {
-        $adtjes = Adtje::latest()->paginate(15);
+        $adtjes = Adtje::approved()->latest()->paginate(15);
 
         return view('adtjes.adtjes', ['adtjes' => $adtjes]);
     }
@@ -152,5 +152,12 @@ class AdtjeController extends Controller
         Session::flash('adtje_collected->reason', $adtje->reason);
 
         return redirect()->route('adtjes.index');
+    }
+
+    public function validation()
+    {
+        $adtjes = Adtje::approved(false)->latest()->paginate(15);
+
+        return view('adtjes.validate', ['adtjes' => $adtjes]);
     }
 }

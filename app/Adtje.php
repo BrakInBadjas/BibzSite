@@ -11,6 +11,8 @@ class Adtje extends Model
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
+    protected $appends = ['approved', 'approvals'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -21,9 +23,26 @@ class Adtje extends Model
         return $this->belongsTo(User::class, 'added_by');
     }
 
+    public function getApprovedAttribute()
+    {
+        return $this->approvals >= config('bibz.adtjes_validator_count');  
+    }
+
+    public function getApprovalsAttribute()
+    {
+        return $this->validations()->where('status', AdtjeValidation::APPROVE)->count();  
+    }
+
     public function scopeOpen($query)
     {
         return $query->where('collected', false);
+    }
+
+    public function scopeApproved($query, $approved = true)
+    {
+        return $query->whereHas('validations', function($q) use ($approved) {
+                $q->where('status', AdtjeValidation::APPROVE);
+        }, $approved ?'>=' : '<', config('bibz.adtjes_validator_count'));
     }
 
     public function validations()

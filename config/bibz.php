@@ -11,6 +11,6 @@ return [
     | an adtje to be approved.
     */
 
-    'adtjes_validator_count' => env('ADTJES_VALIDATOR_COUNT', 3),
+    'adtjes_validator_count' => env('ADTJES_VALIDATOR_COUNT', 1),
 
 ];

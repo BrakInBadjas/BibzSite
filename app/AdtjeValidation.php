@@ -35,4 +35,14 @@ class AdtjeValidation extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function approved()
+    {
+        return $this->status == APPROVE;
+    }
+
+    public function denied()
+    {
+        return $this->status == DENY;
+    }
 }

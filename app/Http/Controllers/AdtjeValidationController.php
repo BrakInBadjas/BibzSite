@@ -100,6 +100,8 @@ class AdtjeValidationController extends Controller
         $validation->status = $request->status == 'null' ? null : $request->status;
         $validation->save();
 
+        if($adtje->approved)
+
         $status_locale = null;
         if($request->status == AdtjeValidation::APPROVE) {
             $status_locale = 'Je hebt dit adtje nu goedgekeurd!';
