@@ -39,23 +39,23 @@ class AdtjeValidationController extends Controller
      */
     public function store(Adtje $adtje, Request $request)
     {
-        $v = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'status' => 'in:'.AdtjeValidation::APPROVE.','.AdtjeValidation::NULL.','.AdtjeValidation::DENY,
         ])->validate();
 
         $av = new AdtjeValidation();
         $av->validator()->associate(Auth::user());
-        $av->status = $request->status == "null" ? null : $request->status;
+        $av->status = $request->status == 'null' ? null : $request->status;
         $av->adtje()->associate($adtje);
         $av->save();
 
         $status_locale = null;
-        if($request->status == AdtjeValidation::APPROVE){
-            $status_locale = "Je hebt dit adtje nu goedgekeurd!";
-        } else if($request->status == AdtjeValidation::NULL){
-            $status_locale = "Jouw status van dit adtje wordt niet meer meegeteld.";
-        } else if($request->status == AdtjeValidation::DENY){
-            $status_locale = "Je hebt dit adtje nu afgekeurd!";
+        if($request->status == AdtjeValidation::APPROVE) {
+            $status_locale = 'Je hebt dit adtje nu goedgekeurd!';
+        } else if($request->status == AdtjeValidation::NULL) {
+            $status_locale = 'Jouw status van dit adtje wordt niet meer meegeteld.';
+        } else if($request->status == AdtjeValidation::DENY) {
+            $status_locale = 'Je hebt dit adtje nu afgekeurd!';
         }
         Session::flash('adtje_validation', $status_locale);
 
@@ -93,20 +93,20 @@ class AdtjeValidationController extends Controller
      */
     public function update(Request $request, Adtje $adtje, AdtjeValidation $validation)
     {
-        $v = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'status' => 'in:'.AdtjeValidation::APPROVE.','.AdtjeValidation::NULL.','.AdtjeValidation::DENY,
         ])->validate();
 
-        $validation->status = $request->status == "null" ? null : $request->status;
+        $validation->status = $request->status == 'null' ? null : $request->status;
         $validation->save();
 
         $status_locale = null;
-        if($request->status == AdtjeValidation::APPROVE){
-            $status_locale = "Je hebt dit adtje nu goedgekeurd!";
-        } else if($request->status == AdtjeValidation::NULL){
-            $status_locale = "Jouw status van dit adtje wordt niet meer meegeteld.";
-        } else if($request->status == AdtjeValidation::DENY){
-            $status_locale = "Je hebt dit adtje nu afgekeurd!";
+        if($request->status == AdtjeValidation::APPROVE) {
+            $status_locale = 'Je hebt dit adtje nu goedgekeurd!';
+        } else if($request->status == AdtjeValidation::NULL) {
+            $status_locale = 'Jouw status van dit adtje wordt niet meer meegeteld.';
+        } else if($request->status == AdtjeValidation::DENY) {
+            $status_locale = 'Je hebt dit adtje nu afgekeurd!';
         }
         Session::flash('adtje_validation', $status_locale);
 

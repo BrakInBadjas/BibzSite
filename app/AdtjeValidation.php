@@ -9,19 +9,19 @@ class AdtjeValidation extends Model
 {
 
     /**
-     * The string used to define an approved validation
+     * The string used to define an approved validation.
      */
     const APPROVE = 'approved';
 
     /**
-     * The string used to define an undecided validation
+     * The string used to define an undecided validation.
      */
-    const NULL     = 'null';
+    const NULL = 'null';
     
     /**
-     * The string used to define a denied validation
+     * The string used to define a denied validation.
      */
-    const DENY     = 'denied';
+    const DENY = 'denied';
 
     use softDeletes;
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];

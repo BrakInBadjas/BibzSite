@@ -11,10 +11,6 @@ class Adtje extends Model
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    public function newQuery($excludeDeleted = true) {
-        return parent::newQuery($excludeDeleted);
-    }
-
     public function user()
     {
         return $this->belongsTo(User::class);
