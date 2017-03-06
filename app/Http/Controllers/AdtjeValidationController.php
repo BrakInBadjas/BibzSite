@@ -13,7 +13,7 @@ class AdtjeValidationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(adtje $adtje)
     {
         //
     }
@@ -23,9 +23,9 @@ class AdtjeValidationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Adtje $adtje)
     {
-        //
+        //unsupported
     }
 
     /**
@@ -34,7 +34,7 @@ class AdtjeValidationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Adtje $adtje, Request $request)
     {
         //
     }
@@ -47,7 +47,7 @@ class AdtjeValidationController extends Controller
      */
     public function show(Adtje $adtje, AdtjeValidation $validation)
     {
-        //
+        //unsupported
     }
 
     /**
@@ -58,7 +58,7 @@ class AdtjeValidationController extends Controller
      */
     public function edit(Adtje $adtje, AdtjeValidation $validation)
     {
-        //
+        //unsupported
     }
 
     /**
@@ -70,7 +70,7 @@ class AdtjeValidationController extends Controller
      */
     public function update(Request $request, Adtje $adtje, AdtjeValidation $validation)
     {
-        //
+        //TODO - change the 'status' of your approval
     }
 
     /**
@@ -81,6 +81,6 @@ class AdtjeValidationController extends Controller
      */
     public function destroy(Adtje $adtje, AdtjeValidation $validation)
     {
-        //
+        //unsupported
     }
 }

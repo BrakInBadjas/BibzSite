@@ -21,29 +21,74 @@
             </button>
         </div>
     </div>
-    <div id="hidden" style="display: none">
-        <form class="form-inline" id="remove-adtje-form" action="{{ route('adtjes.destroy', ['adtje' => $adtje->id]) }}" method="POST">
-            {{ csrf_field() }}
-            <input name="_method" type="hidden" value="DELETE">
-        </form>
+    <div class="row">
+        <div id="hidden" style="display: none">
+            <form class="form-inline" id="remove-adtje-form" action="{{ route('adtjes.destroy', ['adtje' => $adtje->id]) }}" method="POST">
+                {{ csrf_field() }}
+                <input name="_method" type="hidden" value="DELETE">
+            </form>
 
-        <form id="edit-adtje-form" action="{{ route('adtjes.update', ['adtje' => $adtje->id]) }}" method="POST">
-            {{ csrf_field() }}
-            <input name="_method" type="hidden" value="PUT">
-            <textarea class="form-control" rows="3" name="reason" >{{ $adtje->reason }}</textarea>
-        </form>
+            <form id="edit-adtje-form" action="{{ route('adtjes.update', ['adtje' => $adtje->id]) }}" method="POST">
+                {{ csrf_field() }}
+                <input name="_method" type="hidden" value="PUT">
+                <textarea class="form-control" rows="3" name="reason" >{{ $adtje->reason }}</textarea>
+            </form>
 
-        <a class="btn btn-lg btn-primary btn-block" id="save" href="#" onclick="saveAdtje()" role="button">Wijzigingen Oplsaan</a>
+            <a class="btn btn-lg btn-primary btn-block" id="save" href="#" onclick="saveAdtje()" role="button">Wijzigingen Oplsaan</a>
 
-        <a class="btn btn-lg btn-default btn-block" id="cancel" href="#" onclick="cancelEdit()" role="button">Annuleren</a>
+            <a class="btn btn-lg btn-default btn-block" id="cancel" href="#" onclick="cancelEdit()" role="button">Annuleren</a>
 
-        <button type="button" id="delete" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#deleteAdtjeModal">
-            Verwijderen
-        </button>
+            <button type="button" id="delete" class="btn btn-lg btn-danger btn-block" data-toggle="modal" data-target="#deleteAdtjeModal">
+                Verwijderen
+            </button>
 
-        <a class="btn btn-lg btn-primary btn-block" id="edit" href="#" onclick="editAdtje(true)" role="button">Wijzigen</a>
+            <a class="btn btn-lg btn-primary btn-block" id="edit" href="#" onclick="editAdtje(true)" role="button">Wijzigen</a>
 
-        <p class="lead" id="reason">{{ $adtje->reason }}</p>
+            <p class="lead" id="reason">{{ $adtje->reason }}</p>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="panel-title">Keuringen</h1>
+                </div>
+                @if($adtje->validations->count() > 0)
+                    <table class="table">
+                        <tr>
+                            <th>Door</th>
+                            <th>Status</th>    
+                        </tr>
+                        @foreach($adtje->validations as $validation)
+                            <tr>
+                                <td>
+                                    {{$validation->validator->name}}
+                                </td>
+                                <td>
+                                    
+                                    @if($validation->status == AdtjeValidation::APPROVE)
+                                        <button type="button" class="btn btn-xs btn-success"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                    @elseif($validation->status == AdtjeValidation::DENY)
+                                        <button type="button" class="btn btn-xs btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    @else
+                                        <button type="button" class="btn btn-xs btn-default"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                    @endif
+
+                                    @if($validation->validator == Auth::user())
+                                        <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+                                            <button type="button" class="btn btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-default"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                            <button type="button" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></button>
+                                        </div>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                @endif
+            </div>
+        </div>
     </div>
 
     <!-- Popup -->

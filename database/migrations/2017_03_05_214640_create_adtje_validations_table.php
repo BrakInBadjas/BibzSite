@@ -1,5 +1,6 @@
 <?php
 
+use App\AdtjeValidation;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -15,6 +16,7 @@ class CreateAdtjeValidationsTable extends Migration
     {
         Schema::create('adtje_validations', function (Blueprint $table) {
             $table->increments('id');
+            $table->enum('status', [AdtjeValidation::APPROVE, AdtjeValidation::DENY])->nullable();
             $table->unsignedInteger('adtje_id');
             $table->foreign('adtje_id')->references('id')->on('adtjes')->onDelete('cascade');
             $table->unsignedInteger('user_id');

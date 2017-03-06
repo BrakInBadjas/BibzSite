@@ -7,7 +7,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdtjeValidation extends Model
 {
+
+    /**
+     * The string used to define an approved validation
+     */
+    const APPROVE          = 'approved';
+
+    /**
+     * The string used to define an denied validation
+     */
+    const DENY          = 'denied';
+
     use softDeletes;
+    protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
     public function adtje()
     {
@@ -16,6 +28,6 @@ class AdtjeValidation extends Model
 
     public function validator()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

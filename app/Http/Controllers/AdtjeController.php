@@ -96,7 +96,7 @@ class AdtjeController extends Controller
      */
     public function show(Adtje $adtje)
     {
-        return view('adtjes.show', ['adtje' => $adtje]);
+        return view('adtjes.show', ['adtje' => $adtje->load('validations')]);
     }
 
     /**
