@@ -13,8 +13,4 @@ elixir(function(mix) {
     mix.styles([
         'timeline.css'
     ], 'public/css/timeline.css');
-
-    mix.styles([
-        'error.css'
-    ], 'public/css/error.css');
 });
