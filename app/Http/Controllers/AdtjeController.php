@@ -96,7 +96,7 @@ class AdtjeController extends Controller
      */
     public function show(Adtje $adtje)
     {
-        return view('adtjes.show', ['adtje' => $adtje->load('validations')]);
+        return view('adtjes.show', ['adtje' => $adtje, 'user_validation' => $adtje->validations->where('user_id', Auth::user()->id)->first()]);
     }
 
     /**
@@ -107,7 +107,7 @@ class AdtjeController extends Controller
      */
     public function edit(Adtje $adtje)
     {
-        return view('adtjes.show', ['adtje' => $adtje]);
+        return $this->show($adtje);
     }
 
     /**
