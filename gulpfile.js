@@ -13,4 +13,8 @@ elixir(function(mix) {
     mix.styles([
         'timeline.css'
     ], 'public/css/timeline.css');
+
+    mix.scripts([
+        'edit.js'
+    ], 'public/js/edit.js');
 });
