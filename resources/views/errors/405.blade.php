@@ -8,9 +8,9 @@
 <div class="container">
     <div class="row">
         <div class="jumbotron center">
-            <h1>Method not allowed <small class="red">405</small></h1>
+            <h1>Niet toegestane methode <small class="red">405</small></h1>
             <hr>
-            <p>The method you tried to use was not allowed</p>
+            <p>De methode die je probeerde te gebruiken is niet toegestaan</p>
             <img src="https://media.giphy.com/media/yRHAZGHAIz6kE/source.gif">
         </div>
     </div>
