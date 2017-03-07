@@ -25,6 +25,8 @@ class RemoveUniqueFromBuddies extends Migration
      */
     public function down()
     {
-        $table->unique(['user_id', 'buddy_id']);
+        Schema::table('buddies', function (Blueprint $table) {
+            $table->unique(['user_id', 'buddy_id']);
+        });
     }
 }
