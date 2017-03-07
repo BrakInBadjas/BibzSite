@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     public function buddies()
     {
-        return $this->hasMany(Buddy::class)->get()->merge($this->hasMany(Buddy::class, 'buddy_id'));
+        return $this->hasMany(Buddy::class)->get()->merge($this->hasMany(Buddy::class, 'buddy_id')->get());
     }
 
     /**
