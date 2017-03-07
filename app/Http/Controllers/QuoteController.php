@@ -52,7 +52,7 @@ class QuoteController extends Controller
 
         $v->after(function ($v) use ($request) {
             if (Auth::user()->id == $request->id) {
-                $v->errors()->add('id', 'Je kan Quote van jezelf toevoegen!');
+                $v->errors()->add('id', 'Je kan geen Quote van jezelf toevoegen!');
             }
         });
 
