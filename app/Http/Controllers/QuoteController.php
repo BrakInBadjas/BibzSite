@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Quote;
+use Auth;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -44,10 +45,22 @@ class QuoteController extends Controller
             'quote.required' => 'Je moet een quote ingeven!',
         ];
 
-        Validator::make($request->all(), [
+        $v = Validator::make($request->all(), [
             'id' => 'exists:users',
             'quote' => 'required',
-        ], $messages)->validate();
+        ], $messages);
+
+        $v->after(function ($v) use ($request) {
+            if (Auth::user()->id == $request->id) {
+                $v->errors()->add('id', 'Je kan Quote van jezelf toevoegen!');
+            }
+        });
+
+        if ($v->fails()) {
+            return redirect('quotes/create')
+                    ->withErrors($v->errors())
+                    ->withInput();
+        }
 
         $quote = new Quote;
         $quote->user_id = $request->id;
