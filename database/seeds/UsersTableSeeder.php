@@ -18,6 +18,5 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt('secret'),
             'remember_token' => 'faker_'.str_random(10),
         ]);
-
     }
 }
