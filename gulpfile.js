@@ -17,4 +17,8 @@ elixir(function(mix) {
     mix.scripts([
         'edit.js'
     ], 'public/js/edit.js');
+
+    mix.scripts([
+        'adtjes.js'
+    ], 'public/js/adtjes.js');
 });

@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function adtjes()
     {
-        return $this->hasMany(Adtje::class);
+        return $this->hasMany(Adtje::class)->approved();
     }
 
     public function quotes()
