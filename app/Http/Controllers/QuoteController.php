@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Quote;
+use Auth;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -44,18 +45,30 @@ class QuoteController extends Controller
             'quote.required' => 'Je moet een quote ingeven!',
         ];
 
-        Validator::make($request->all(), [
+        $v = Validator::make($request->all(), [
             'id' => 'exists:users',
             'quote' => 'required',
-        ], $messages)->validate();
+        ], $messages);
+
+        $v->after(function ($v) use ($request) {
+            if (Auth::user()->id == $request->id) {
+                $v->errors()->add('id', 'Je kan geen Quote van jezelf toevoegen!');
+            }
+        });
+
+        if ($v->fails()) {
+            return redirect('quotes/create')
+                    ->withErrors($v->errors())
+                    ->withInput();
+        }
 
         $quote = new Quote;
         $quote->user_id = $request->id;
         $quote->quote = $request->quote;
         $quote->save();
 
-        Session::flash('quote_added', $quote->quote);
-        Session::flash('quote_added_for', $quote->user->name);
+        Session::flash('quote_added->name', $quote->user->name);
+        Session::flash('quote_added->quote', $quote->quote);
 
         return redirect()->route('quotes.index');
     }
@@ -105,6 +118,9 @@ class QuoteController extends Controller
      */
     public function destroy(Quote $quote)
     {
+        Session::flash('quote_deleted->name', $quote->user->name);
+        Session::flash('quote_deleted->quote', $quote->quote);
+
         $quote->delete();
 
         return redirect()->route('quotes.index');

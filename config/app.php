@@ -193,6 +193,7 @@ return [
     'aliases' => [
 
         'Adtje' => App\Adtje::class,
+        'AdtjeValidation' => App\AdtjeValidation::class,
         'Buddy' => App\Buddy::class,
         'Quote' => App\Quote::class,
         'User' => App\User::class,

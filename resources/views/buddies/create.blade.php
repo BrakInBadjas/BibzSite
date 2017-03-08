@@ -60,11 +60,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('quote') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('relation') ? ' has-error' : '' }}">
                             <label for="relation" class="col-md-4 control-label">Relatie</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" rows="3" name="relation"></textarea>
+                                <textarea class="form-control" rows="3" name="relation"}}>{{ old('relation') }}</textarea>
 
                                 @if ($errors->has('relation'))
                                     <span class="help-block">

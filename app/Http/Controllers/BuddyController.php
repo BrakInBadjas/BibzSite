@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as LengthAwarePaginator;
 use Illuminate\Pagination\Paginator as Paginator;
+use Session;
 use Validator;
 
 class BuddyController extends Controller
@@ -69,9 +70,10 @@ class BuddyController extends Controller
         ], $messages);
 
         $v->after(function ($v) use ($request) {
-            $buddies = User::find($request->user_id)->allBuddies();
-            if ($buddies->where('user_id', $request->buddy_id)->count() > 0
-                || $buddies->where('buddy_id', $request->buddy_id)->count() > 0) {
+            $buddies = User::find($request->user_id)->buddies();
+
+            if ($buddies->where('buddy_id', $request->buddy_id)->where('user_id', $request->user_id)->count() > 0
+                || $buddies->where('user_id', $request->buddy_id)->where('buddy_id', $request->user_id)->count() > 0) {
                 $v->errors()->add('duplicate', 'Deze twee zijn al drinking buddies!');
             }
             if ($request->buddy_id == $request->user_id) {
@@ -90,6 +92,9 @@ class BuddyController extends Controller
         $buddies->buddy_id = $request->buddy_id;
         $buddies->relation = $request->relation;
         $buddies->save();
+
+        Session::flash('buddy_added->user->name', User::find($request->user_id)->name);
+        Session::flash('buddy_added->buddy->name', User::find($request->buddy_id)->name);
 
         return redirect()->route('buddies.index');
     }
@@ -139,6 +144,9 @@ class BuddyController extends Controller
     public function destroy(Buddy $buddy)
     {
         $buddy->delete();
+
+        Session::flash('buddy_deleted->user->name', User::find($buddy->user_id)->name);
+        Session::flash('buddy_deleted->buddy->name', User::find($buddy->buddy_id)->name);
 
         return redirect()->route('buddies.index');
     }

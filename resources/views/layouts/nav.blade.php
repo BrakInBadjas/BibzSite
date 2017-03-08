@@ -32,6 +32,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ route('adtjes.index') }}">Adtjes</a></li>
                             <li><a href="{{ route('adtjes.create') }}">Adtje Toevoegen</a></li>
+                            <li><a href="{{ route('adtjes.validate') }}">Adtje Controleren <span class="badge">{{Adtje::shouldVote()->count()}}</span></a></li>
                         </ul>
                     </li>
 

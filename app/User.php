@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function adtjes()
     {
-        return $this->hasMany(Adtje::class);
+        return $this->hasMany(Adtje::class)->approved();
     }
 
     public function quotes()
@@ -58,19 +58,9 @@ class User extends Authenticatable
         return $this->hasMany(Quote::class);
     }
 
-    public function myBuddies()
+    public function buddies()
     {
-        return $this->hasMany(Buddy::class);
-    }
-
-    public function buddyOf()
-    {
-        return $this->hasMany(Buddy::class, 'buddy_id');
-    }
-
-    public function allBuddies()
-    {
-        return $this->myBuddies->merge($this->buddyOf);
+        return $this->hasMany(Buddy::class)->get()->merge($this->hasMany(Buddy::class, 'buddy_id')->get());
     }
 
     /**

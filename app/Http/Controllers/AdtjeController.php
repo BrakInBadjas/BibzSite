@@ -18,7 +18,7 @@ class AdtjeController extends Controller
      */
     public function index()
     {
-        $adtjes = Adtje::latest()->paginate(15);
+        $adtjes = Adtje::approved()->latest()->paginate(15);
 
         return view('adtjes.adtjes', ['adtjes' => $adtjes]);
     }
@@ -69,7 +69,7 @@ class AdtjeController extends Controller
         $adtje->reason = $request->reason;
         $adtje->save();
 
-        $buddies = User::find($request->id)->allBuddies();
+        $buddies = User::find($request->id)->buddies();
         foreach ($buddies as $buddy) {
             $adtje = new Adtje;
             if ($buddy->user->id == $request->id) {
@@ -82,8 +82,8 @@ class AdtjeController extends Controller
             $adtje->save();
         }
 
-        Session::flash('added_adtje', $adtje->reason);
-        Session::flash('added_adtje_for', $adtje->user->name);
+        Session::flash('adtje_added->name', $adtje->user->name);
+        Session::flash('adtje_added->reason', $adtje->reason);
 
         return redirect()->route('adtjes.index');
     }
@@ -96,7 +96,7 @@ class AdtjeController extends Controller
      */
     public function show(Adtje $adtje)
     {
-        return view('adtjes.show', ['adtje' => $adtje]);
+        return view('adtjes.show', ['adtje' => $adtje, 'user_validation' => $adtje->validations->where('user_id', Auth::user()->id)->first()]);
     }
 
     /**
@@ -107,7 +107,7 @@ class AdtjeController extends Controller
      */
     public function edit(Adtje $adtje)
     {
-        return view('adtjes.show', ['adtje' => $adtje]);
+        return $this->show($adtje);
     }
 
     /**
@@ -135,19 +135,29 @@ class AdtjeController extends Controller
     {
         $adtje->delete();
 
+        Session::flash('adtje_deleted->name', $adtje->user->name);
+        Session::flash('adtje_deleted->reason', $adtje->reason);
+
         return redirect()->route('adtjes.index');
     }
 
     public function collect(Request $request)
     {
-        $adtje = Auth::user()->adtjes()->open()->oldest()->first();
+        $adtje = Auth::user()->adtjes()->approved()->open()->oldest()->first();
 
         $adtje->collected = true;
         $adtje->save();
 
-        Session::flash('collected_adtje_reason', $adtje->reason);
-        Session::flash('collected_adtje', $adtje->created_at->toFormattedDateString());
+        Session::flash('adtje_collected->date', $adtje->created_at->toFormattedDateString());
+        Session::flash('adtje_collected->reason', $adtje->reason);
 
         return redirect()->route('adtjes.index');
+    }
+
+    public function validation()
+    {
+        $adtjes = Adtje::shouldVote()->oldest()->paginate(15);
+
+        return view('adtjes.validate', ['adtjes' => $adtjes]);
     }
 }

@@ -6,29 +6,46 @@
 
 @section('content')
     <div class="container">
-        @if (Session::has('collected_adtje'))
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Adtje van {{ Session::get('collected_adtje') }} succesvol geïnt</h3>
-                </div>
-                <div class="panel-body">
-                    {{ Session::get('collected_adtje_reason') }}
-                </div>
+        @if(Session::has('adtje_added->name'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>Adtje voor {{ Session::get('adtje_added->name') }} succesvol toegevoegd!</p>
+                Reden: {{ Session::get('adtje_added->reason') }}
             </div>
         @endif
-        @if (Session::has('added_adtje'))
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Adtje voor {{ Session::get('added_adtje_for') }} succesvol toegevoegd</h3>
-                </div>
-                <div class="panel-body">
-                    {{ Session::get('added_adtje') }}
-                </div>
+        @if(Session::has('adtje_deleted->name'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <p>Adtje voor {{ Session::get('adtje_deleted->name') }} succesvol verwijderd!</p>
+                Reden: {{ Session::get('adtje_deleted->reason') }}
+            </div>
+        @endif
+        @if(Session::has('adtje_collected->date'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                Adtje succesvol geïnt
+            </div>
+        @endif
+        @if(Session::has('adtje_deleted'))
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                {{Session::get('adtje_deleted')}}
             </div>
         @endif
         <div class="row">
             <div class="col-md-8">
                 <div class="timeline-centered">
+                    @if($adtjes->currentPage() > 1)
+                    <article class="timeline-entry">
+                        <a href="{{url($adtjes->previousPageUrl())}}">
+                            <div class="timeline-entry-inner timeline-entry-pagination-up">
+                                <div class="timeline-icon">
+                                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    @endif
                     @foreach ($adtjes as $adtje)
                         <article class="timeline-entry">
                             <div class="timeline-entry-inner">
@@ -48,19 +65,28 @@
                             </div>
                         </article>
                     @endforeach
+                    @if(!$adtjes->hasMorePages())
                     <article class="timeline-entry begin">
                         <div class="timeline-entry-inner">
                             <div class="timeline-icon">
-                                <i class="entypo-flight"></i>
+                                <i class="fa fa-server" aria-hidden="true"></i>
                             </div>
                             <div class="timeline-label">
                                 <p>Website gemaakt</p>
                             </div>
                         </div>
                     </article>
-                </div>
-                <div class="text-center">
-                    {{ $adtjes->links() }}
+                    @else
+                    <article class="timeline-entry">
+                        <a href="{{url($adtjes->nextPageUrl())}}">
+                            <div class="timeline-entry-inner timeline-entry-pagination-down">
+                                <div class="timeline-icon">
+                                    <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    @endif
                 </div>
             </div>
             <div class="col-md-4">
@@ -82,7 +108,7 @@
                             <th>Adtjes</th>
                             <th>Te innen</th>
                         </tr>
-                        @foreach (User::all() as $user)
+                        @foreach (User::with('adtjes')->get()->sortByDesc(function($user) { return $user->adtjes()->count(); }) as $user)
                             <tr>
                                 <td><a href="{{ route('profile.show', ['id' => $user->id]) }}"><p class="text-muted">{{ $user->name }}</p></a></td>
                                 <td>{{ $user->adtjes->count() }}</td>
