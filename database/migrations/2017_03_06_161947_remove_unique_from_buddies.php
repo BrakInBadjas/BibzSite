@@ -13,9 +13,11 @@ class RemoveUniqueFromBuddies extends Migration
      */
     public function up()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::table('buddies', function (Blueprint $table) {
             $table->dropUnique(['user_id', 'buddy_id']);
         });
+        Schema::enableForeignKeyConstraints();
     }
 
     /**
