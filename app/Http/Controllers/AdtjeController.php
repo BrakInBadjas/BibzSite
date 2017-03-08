@@ -143,7 +143,7 @@ class AdtjeController extends Controller
 
     public function collect(Request $request)
     {
-        $adtje = Auth::user()->adtjes()->open()->oldest()->first();
+        $adtje = Auth::user()->adtjes()->approved()->open()->oldest()->first();
 
         $adtje->collected = true;
         $adtje->save();
@@ -156,7 +156,7 @@ class AdtjeController extends Controller
 
     public function validation()
     {
-        $adtjes = Adtje::approved(false)->latest()->paginate(15);
+        $adtjes = Adtje::shouldVote()->oldest()->paginate(15);
 
         return view('adtjes.validate', ['adtjes' => $adtjes]);
     }

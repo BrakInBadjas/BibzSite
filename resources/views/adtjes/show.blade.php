@@ -37,7 +37,7 @@
         <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h1 class="panel-title">Keuringen</h1>
+                    <h1 class="panel-title">Stemmen</h1>
                 </div>
                 <table class="table">
                     @if($adtje->validations->count() > 0)

@@ -100,7 +100,11 @@ class AdtjeValidationController extends Controller
         $validation->status = $request->status == 'null' ? null : $request->status;
         $validation->save();
 
-        if($adtje->approved)
+        if($adtje->denied){
+            $adtje->delete();
+            Session::flash('adtje_deleted', 'Dit adtje is nu verwijderd door een te groot aantal afwijzingen!');
+            return redirect()->route('adtjes.index');
+        }
 
         $status_locale = null;
         if($request->status == AdtjeValidation::APPROVE) {

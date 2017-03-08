@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,7 +12,7 @@ class Adtje extends Model
 
     protected $dates = ['created_at', 'updated_at', 'deleted_at'];
 
-    protected $appends = ['approved', 'approvals'];
+    protected $appends = ['approved', 'approvals', 'denied', 'denials'];
 
     public function user()
     {
@@ -33,6 +34,16 @@ class Adtje extends Model
         return $this->validations()->where('status', AdtjeValidation::APPROVE)->count();  
     }
 
+    public function getDeniedAttribute()
+    {
+        return $this->denials >= config('bibz.adtjes_validator_count');  
+    }
+
+    public function getDenialsAttribute()
+    {
+        return $this->validations()->where('status', AdtjeValidation::DENY)->count();  
+    }
+
     public function scopeOpen($query)
     {
         return $query->where('collected', false);
@@ -43,6 +54,13 @@ class Adtje extends Model
         return $query->whereHas('validations', function($q) use ($approved) {
                 $q->where('status', AdtjeValidation::APPROVE);
         }, $approved ?'>=' : '<', config('bibz.adtjes_validator_count'));
+    }
+
+    public function scopeShouldVote($query)
+    {
+        return $query->approved(false)->whereHas('validations', function ($q){
+            $q->where('user_id', Auth::user()->id);
+        }, 0);
     }
 
     public function validations()
