@@ -70,9 +70,10 @@ class BuddyController extends Controller
         ], $messages);
 
         $v->after(function ($v) use ($request) {
-            $buddies = User::find($request->user_id)->allBuddies();
-            if ($buddies->where('user_id', $request->buddy_id)->count() > 0
-                || $buddies->where('buddy_id', $request->buddy_id)->count() > 0) {
+            $buddies = User::find($request->user_id)->buddies();
+
+            if ($buddies->where('buddy_id', $request->buddy_id)->where('user_id', $request->user_id)->count() > 0
+                || $buddies->where('user_id', $request->buddy_id)->where('buddy_id', $request->user_id)->count() > 0) {
                 $v->errors()->add('duplicate', 'Deze twee zijn al drinking buddies!');
             }
             if ($request->buddy_id == $request->user_id) {
