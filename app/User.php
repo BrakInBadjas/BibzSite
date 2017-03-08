@@ -58,19 +58,9 @@ class User extends Authenticatable
         return $this->hasMany(Quote::class);
     }
 
-    public function myBuddies()
+    public function buddies()
     {
-        return $this->hasMany(Buddy::class);
-    }
-
-    public function buddyOf()
-    {
-        return $this->hasMany(Buddy::class, 'buddy_id');
-    }
-
-    public function allBuddies()
-    {
-        return $this->myBuddies->merge($this->buddyOf);
+        return $this->hasMany(Buddy::class)->get()->merge($this->hasMany(Buddy::class, 'buddy_id')->get());
     }
 
     /**

@@ -31,7 +31,7 @@
                             <label for="quote" class="col-md-4 control-label">Quote</label>
 
                             <div class="col-md-6">
-                                <textarea class="form-control" rows="3" name="quote"></textarea>
+                                <textarea class="form-control" rows="3" name="quote">{{ old('quote') }}</textarea>
 
                                 @if ($errors->has('quote'))
                                     <span class="help-block">

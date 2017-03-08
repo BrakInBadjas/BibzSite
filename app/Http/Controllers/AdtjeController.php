@@ -69,7 +69,7 @@ class AdtjeController extends Controller
         $adtje->reason = $request->reason;
         $adtje->save();
 
-        $buddies = User::find($request->id)->allBuddies();
+        $buddies = User::find($request->id)->buddies();
         foreach ($buddies as $buddy) {
             $adtje = new Adtje;
             if ($buddy->user->id == $request->id) {
