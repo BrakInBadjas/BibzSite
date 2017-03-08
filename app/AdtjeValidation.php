@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AdtjeValidation extends Model
 {
-
     /**
      * The string used to define an approved validation.
      */
@@ -17,7 +16,7 @@ class AdtjeValidation extends Model
      * The string used to define an undecided validation.
      */
     const NULL = 'null';
-    
+
     /**
      * The string used to define a denied validation.
      */

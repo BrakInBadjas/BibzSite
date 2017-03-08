@@ -49,20 +49,17 @@ class AdtjeValidationController extends Controller
         $av->adtje()->associate($adtje);
         $av->save();
 
-        if($adtje->denied)
-        {
+        if ($adtje->denied) {
             $adtje->delete();
             Session::flash('adtje_deleted', 'Dit adtje is nu verwijderd door een te groot aantal afwijzingen!');
-            if($request->has('from') && $request->from == 'show')
-            {
+            if ($request->has('from') && $request->from == 'show') {
                 return redirect()->route('adtjes.index');
             } else {
                 return redirect()->back();
             }
         }
 
-        if($adtje->approved)
-        {
+        if ($adtje->approved) {
             Session::flash('adtje_approved', 'Dit adtje is nu goedgekeurd!');
         }
 
@@ -109,20 +106,17 @@ class AdtjeValidationController extends Controller
         $validation->status = $request->status == 'null' ? null : $request->status;
         $validation->save();
 
-        if($adtje->denied)
-        {
+        if ($adtje->denied) {
             $adtje->delete();
             Session::flash('adtje_deleted', 'Dit adtje is nu verwijderd door een te groot aantal afwijzingen!');
-            if($request->has('from') && $request->from == 'show')
-            {
+            if ($request->has('from') && $request->from == 'show') {
                 return redirect()->route('adtjes.index');
             } else {
                 return redirect()->back();
             }
         }
 
-        if($adtje->approved)
-        {
+        if ($adtje->approved) {
             Session::flash('adtje_approved', 'Dit adtje is nu goedgekeurd!');
         }
 
