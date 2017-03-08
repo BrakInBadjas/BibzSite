@@ -73,7 +73,7 @@
                         @endif
                     </div>
                 </div>
-                
+
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <div class="btn-group" role="group">
@@ -95,8 +95,8 @@
                     <p><small>Quote{{$user->quotes->count() != 1 ? 's' : ''}}</small></p>
                 </div>
                 <div class="col-xs-4 emphasis">
-                    <h2><strong> {{ $user->allBuddies()->count() }} </strong></h2>
-                    <p><small>Budd{{$user->allBuddies()->count() != 1 ? 'ies' : 'y'}}</small></p>
+                    <h2><strong> {{ $user->buddies()->count() }} </strong></h2>
+                    <p><small>Budd{{$user->buddies()->count() != 1 ? 'ies' : 'y'}}</small></p>
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
 </div>
 
 <script type="text/javascript">
-    
+
 
 </script>
 
