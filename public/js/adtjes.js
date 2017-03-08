@@ -13,5 +13,15 @@ $(function() {
         $('#validation_status').val('denied');
         $('#post-validation').submit();
     });
+
+    $('[action="vote"]').click(function() {
+        var vote = $(this).attr('vote');
+        var id = $(this).attr('adtje-id');
+
+        var form = $('#post-validation');
+        form.attr('action', form.attr('action').replace(/ADTJEID/g, id));
+        $('#validation_status').attr('value', vote);
+        form.submit();
+    })
 });
 //# sourceMappingURL=adtjes.js.map

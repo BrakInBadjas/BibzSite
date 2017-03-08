@@ -49,17 +49,26 @@ class AdtjeValidationController extends Controller
         $av->adtje()->associate($adtje);
         $av->save();
 
-        $status_locale = null;
-        if($request->status == AdtjeValidation::APPROVE) {
-            $status_locale = 'Je hebt dit adtje nu goedgekeurd!';
-        } else if($request->status == AdtjeValidation::NULL) {
-            $status_locale = 'Jouw status van dit adtje wordt niet meer meegeteld.';
-        } else if($request->status == AdtjeValidation::DENY) {
-            $status_locale = 'Je hebt dit adtje nu afgekeurd!';
+        if($adtje->denied)
+        {
+            $adtje->delete();
+            Session::flash('adtje_deleted', 'Dit adtje is nu verwijderd door een te groot aantal afwijzingen!');
+            if($request->has('from') && $request->from == 'show')
+            {
+                return redirect()->route('adtjes.index');
+            } else {
+                return redirect()->back();
+            }
         }
-        Session::flash('adtje_validation', $status_locale);
 
-        return redirect()->route('adtjes.show', ['adtje' => $adtje->id]);
+        if($adtje->approved)
+        {
+            Session::flash('adtje_approved', 'Dit adtje is nu goedgekeurd!');
+        }
+
+        Session::flash('adtje_validation', 'Je stem voor het adtje is verwerkt!');
+
+        return redirect()->back();
     }
 
     /**
@@ -100,23 +109,26 @@ class AdtjeValidationController extends Controller
         $validation->status = $request->status == 'null' ? null : $request->status;
         $validation->save();
 
-        if($adtje->denied){
+        if($adtje->denied)
+        {
             $adtje->delete();
             Session::flash('adtje_deleted', 'Dit adtje is nu verwijderd door een te groot aantal afwijzingen!');
-            return redirect()->route('adtjes.index');
+            if($request->has('from') && $request->from == 'show')
+            {
+                return redirect()->route('adtjes.index');
+            } else {
+                return redirect()->back();
+            }
         }
 
-        $status_locale = null;
-        if($request->status == AdtjeValidation::APPROVE) {
-            $status_locale = 'Je hebt dit adtje nu goedgekeurd!';
-        } else if($request->status == AdtjeValidation::NULL) {
-            $status_locale = 'Jouw status van dit adtje wordt niet meer meegeteld.';
-        } else if($request->status == AdtjeValidation::DENY) {
-            $status_locale = 'Je hebt dit adtje nu afgekeurd!';
+        if($adtje->approved)
+        {
+            Session::flash('adtje_approved', 'Dit adtje is nu goedgekeurd!');
         }
-        Session::flash('adtje_validation', $status_locale);
 
-        return redirect()->route('adtjes.show', ['adtje' => $adtje->id]);
+        Session::flash('adtje_validation', 'Je stem voor het adtje is verwerkt!');
+
+        return redirect()->back();
     }
 
     /**

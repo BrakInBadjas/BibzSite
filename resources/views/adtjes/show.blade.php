@@ -2,14 +2,22 @@
 
 @section('content')
 <div class="container">
-
-    @if(Session::has('adtje_validation'))
+    @if(Session::has('adtje_success'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{Session::get('adtje_success')}}</p>
+        </div>
+    @elseif(Session::has('adtje_deleted'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <p>{{Session::get('adtje_deleted')}}</p>
+        </div>
+    @elseif(Session::has('adtje_validation'))
         <div class="alert alert-success alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <p>{{Session::get('adtje_validation')}}</p>
         </div>
     @endif
-
     <div class="jumbotron">
         <h1 class="display-3">Adtje voor <a href="{{ route('profile.show', ['id' => $adtje->user->id]) }}">{{ $adtje->user->name }}</a></h1>
         <span>Uitgedeeld op {{ $adtje->created_at->toFormattedDateString() }} door
@@ -86,13 +94,13 @@
             <input name="_method" type="hidden" value="DELETE">
         </form>
         @if($user_validation)
-            <form id="post-validation" action="{{route('adtjes.validation.update', ['adtje' => $adtje->id, 'validation' => $user_validation->id]) }}" method="POST">
+            <form id="post-validation" action="{{route('adtjes.validation.update', ['adtje' => $adtje->id, 'validation' => $user_validation->id]) }}?from=show" method="POST">
                 {{ csrf_field() }}
                 <input id="validation_status" name="status" value="null" type="hidden">
                 <input name="_method" type="hidden" value="PUT">
             </form>
         @else
-            <form id="post-validation" action="{{route('adtjes.validation.store', ['adtje' => $adtje->id]) }}" method="POST">
+            <form id="post-validation" action="{{route('adtjes.validation.store', ['adtje' => $adtje->id]) }}?from=show" method="POST">
                 {{ csrf_field() }}
                 <input id="validation_status" name="status" value="null" type="hidden">
             </form>
