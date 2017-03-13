@@ -87,7 +87,7 @@
                         </tr>
                         @foreach (User::with('quotes')->get()->sortByDesc(function($user) { return $user->quotes()->count(); }) as $user)
                             <tr>
-                                <td>{{ $user->name }}</td>
+                                <td><a href="{{ route('profile.show', ['id' => $user->id]) }}" class="text-muted">{{ $user->name }}</a></td>
                                 <td>{{ $user->quotes->count() }}</td>
                             </tr>
                         @endforeach

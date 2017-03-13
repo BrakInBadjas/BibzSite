@@ -108,8 +108,8 @@
                         @foreach ($buddies->filter(function($v,$k){return $v['object']->deleted_at == null;}) as $buddyData)
                         <?php $buddy = $buddyData['object']; ?>
                             <tr>
-                                <td><a href="{{ route('profile.show', [$buddy->user->id]) }}"><p class="text-muted">{{ $buddy->user->name }}</p></a></td>
-                                <td><a href="{{ route('profile.show', [$buddy->buddy->id]) }}"><p class="text-muted">{{ $buddy->buddy->name }}</p></a></td>
+                                <td><a href="{{ route('profile.show', [$buddy->user->id]) }}" class="text-muted">{{ $buddy->user->name }}</a></td>
+                                <td><a href="{{ route('profile.show', [$buddy->buddy->id]) }}" class="text-muted">{{ $buddy->buddy->name }}</a></td>
                             </tr>
                         @endforeach
                     </table>

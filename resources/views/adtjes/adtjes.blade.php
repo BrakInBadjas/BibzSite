@@ -110,7 +110,7 @@
                         </tr>
                         @foreach (User::with('adtjes')->get()->sortByDesc(function($user) { return $user->adtjes()->count(); }) as $user)
                             <tr>
-                                <td><a href="{{ route('profile.show', ['id' => $user->id]) }}"><p class="text-muted">{{ $user->name }}</p></a></td>
+                                <td><a href="{{ route('profile.show', ['id' => $user->id]) }}" class="text-muted">{{ $user->name }}</a></td>
                                 <td>{{ $user->adtjes->count() }}</td>
                                 <td>{{ $user->adtjes()->open()->count() }}</td>
                             </tr>
