@@ -6,8 +6,9 @@
         <div class="col-md-12">
             <div class="jumbotron">
                 <h1>
-                    @if(($hour = Carbon::now()->hour) < 6)Ga eens slapen!
-                    @elseif($hour > 16 && ($day = Carbon::now()->format('l')) == 'Tuesday') BORRELTIJD!
+                    @if(($now = Carbon::now()) && ($hour = $now->hour) < 6)Ga eens slapen!
+                    @elseif($now->day == 14 && $now->month == 3) <a href="https://en.wikipedia.org/wiki/Pi_Day" class="text-muted">HAPPY INTERNATIONAL PI DAY!</a>
+                    @elseif($hour > 16 && ($day = $now->format('l')) == 'Tuesday') BORRELTIJD!
                     @elseif($hour == 12) TOSTITIJD!
                     @elseif($hour < 12)Goedemorgen {{Auth::user()->name}}!
                     @elseif($hour < 18)Goedemiddag {{Auth::user()->name}}!
