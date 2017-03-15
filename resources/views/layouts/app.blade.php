@@ -35,12 +35,27 @@
         @include('layouts.nav')
 
         @yield('content')
+        @if(Auth::check())
+            @include('layouts.report')
+        @endif
     </div>
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
+    @if(Auth::check())
+        <script src="{{ asset('js/bug.js') }}" type="text/JavaScript"></script>
+        @if(Session::has('open-bug-modal'))
+            <script type="text/javascript">
+                $('#bug-report-modal').modal('show');
+            </script>
+        @elseif(Session::has("bug-submission"))
+            <script type="text/javascript">
+                $('#bug-feedback-modal').modal('show');
+            </script>
+        @endif
+    @endif
     @yield('scripts')
 </body>
 </html>
