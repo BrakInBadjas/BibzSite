@@ -21,4 +21,8 @@ elixir(function(mix) {
     mix.scripts([
         'adtjes.js'
     ], 'public/js/adtjes.js');
+
+    mix.scripts([
+        'bug.js'
+    ], 'public/js/bug.js');
 });

@@ -82,6 +82,12 @@
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
+                                <a id="open-bug-report" data-toggle="modal" data-target="#bug-report-modal"><i class="fa fa-btn  fa-bug fa-fw" aria-hidden="true"></i>
+                                    Report Bug
+                                </a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();"><i class="fa fa-btn  fa-sign-out fa-fw" aria-hidden="true"></i>
