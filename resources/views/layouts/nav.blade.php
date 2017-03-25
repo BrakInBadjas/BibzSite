@@ -4,7 +4,7 @@
 
             <!-- Collapsed Hamburger -->
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                <span class="sr-only">Toggle Navigation</span>
+                <span class="sr-only">{{__('layout/general.navigation_toggle')}}</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -22,7 +22,7 @@
                 @if (Auth::check())
                     <li class="dropdown {{ (strpos(Request::path(), 'adtjes') !== false) ? 'active' : ''}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Adtjes
+                            {{__('models/adtje.title')}}
                             @if(($count = Adtje::where('user_id', Auth::user()->id)->open()->count()) > 0)
                                 <span class="badge">{{$count}}</span>
                             @endif
@@ -30,31 +30,31 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('adtjes.index') }}">Adtjes</a></li>
-                            <li><a href="{{ route('adtjes.create') }}">Adtje Toevoegen</a></li>
-                            <li><a href="{{ route('adtjes.validate') }}">Adtje Controleren <span class="badge">{{Adtje::shouldVote()->count()}}</span></a></li>
+                            <li><a href="{{ route('adtjes.index') }}">{{__('models/adtje.title')}}</a></li>
+                            <li><a href="{{ route('adtjes.create') }}">{{__('models/adtje.add')}}</a></li>
+                            <li><a href="{{ route('adtjes.validate') }}">{{__('models/adtje.check')}} <span class="badge">{{Adtje::shouldVote()->count()}}</span></a></li>
                         </ul>
                     </li>
 
                     <li class="dropdown {{ (strpos(Request::path(), 'quotes') !== false) ? 'active' : ''}}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            Quotes <span class="caret"></span>
+                            {{__('models/quote.title')}} <span class="caret"></span>
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="{{ route('quotes.index') }}">Quotes</a></li>
-                            <li><a href="{{ route('quotes.create') }}">Quote Toevoegen</a></li>
+                            <li><a href="{{ route('quotes.index') }}">{{__('models/quote.title')}}</a></li>
+                            <li><a href="{{ route('quotes.create') }}">{{__('models/quote.add')}}</a></li>
                         </ul>
                     </li>
 
                 <li class="dropdown {{ (strpos(Request::path(), 'buddies') !== false) ? 'active' : ''}}">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                        Drinking Buddies <span class="caret"></span>
+                        {{__('models/drinking_buddies.title')}} <span class="caret"></span>
                     </a>
 
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="{{ route('buddies.index') }}">Drinking Buddies</a></li>
-                        <li><a href="{{ route('buddies.create') }}">Drinking Buddy Toevoegen</a></li>
+                        <li><a href="{{ route('buddies.index') }}">{{__('models/drinking_buddies.title')}}</a></li>
+                        <li><a href="{{ route('buddies.create') }}">{{__('models/drinking_buddies.add')}}</a></li>
                     </ul>
                 </li>
 
@@ -66,8 +66,8 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @if (Auth::guest())
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
+                    <li><a href="{{ route('login') }}">{{__('auth/general.login')}}</a></li>
+                    <li><a href="{{ route('register') }}">{{__('auth/general.register')}}</a></li>
                 @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -91,7 +91,7 @@
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();"><i class="fa fa-btn  fa-sign-out fa-fw" aria-hidden="true"></i>
-                                    Logout
+                                    {{__('auth/general.logout')}}
                                 </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
