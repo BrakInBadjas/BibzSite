@@ -25,4 +25,7 @@ elixir(function(mix) {
     mix.scripts([
         'bug.js'
     ], 'public/js/bug.js');
+
+    mix.copy('resources/assets/img/favicon.ico', 'public/img/favicon.ico');
+    mix.copy('resources/assets/img/background.jpg', 'public/img/bg.jpg');
 });
