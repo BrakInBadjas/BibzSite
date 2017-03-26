@@ -28,4 +28,6 @@ elixir(function(mix) {
 
     mix.copy('resources/assets/img/favicon.ico', 'public/img/favicon.ico');
     mix.copy('resources/assets/img/background.jpg', 'public/img/bg.jpg');
+
+    mix.copy('resources/assets/img/pandora', 'public/img/pandora');
 });
