@@ -12,61 +12,10 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
+        <link href="{{ asset('css/front.css') }}" rel="stylesheet">
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div class="parallax flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
@@ -82,7 +31,76 @@
                 <div class="title m-b-md">
                     #Bibz
                 </div>
+                    <div id="countdown"></div>
             </div>
         </div>
+        <div class="grid-container">
+            <div class="row">
+                <div class="col-6">
+                    <h1>Team</h1>
+                    <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    <div class="card">
+                        <div class="container">
+                            <img src="{{ asset('img/pandora/Sven.jpg') }}" alt="Sven" style="width:100%">
+                            <h2>CEO - Sven</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <div class="card">
+                        <div class="container">
+                            <img src="{{ asset('img/pandora/Olaf.png') }}" alt="Olaf" style="width:100%">
+                            <h2>Olaf</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-1">
+                    <div class="card">
+                        <div class="container">
+                            <img src="{{ asset('img/pandora/Elsa.png') }}" alt="Elsa" style="width:100%">
+                            <h2>Elsa</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="card">
+                        <div class="container">
+                            <img src="{{ asset('img/pandora/Anna.png') }}" alt="Anna" style="width:100%">
+                            <h2>Anna</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="card">
+                        <div class="container">
+                            <img src="{{ asset('img/pandora/Kristoff.png') }}" alt="Kristoff" style="width:100%">
+                            <h2>Kristoff</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="card">
+                        <div class="container">
+                            <img src="{{ asset('img/pandora/Baymax.png') }}" alt="Baymax" style="width:100%">
+                            <h2>Baymax</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <!-- JavaScripts -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/front.js') }}" type="text/JavaScript"></script>
     </body>
 </html>

@@ -14,6 +14,10 @@ elixir(function(mix) {
         'timeline.css'
     ], 'public/css/timeline.css');
 
+    mix.styles([
+        'frontpage.css'
+    ], 'public/css/front.css');
+
     mix.scripts([
         'edit.js'
     ], 'public/js/edit.js');
@@ -25,4 +29,14 @@ elixir(function(mix) {
     mix.scripts([
         'bug.js'
     ], 'public/js/bug.js');
+
+    mix.scripts([
+        'jquery.countdown.min.js',
+        'frontpage.js'
+    ], 'public/js/front.js');
+
+    mix.copy('resources/assets/img/favicon.ico', 'public/img/favicon.ico');
+    mix.copy('resources/assets/img/background.jpg', 'public/img/bg.jpg');
+
+    mix.copy('resources/assets/img/pandora', 'public/img/pandora');
 });
