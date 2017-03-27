@@ -20,5 +20,5 @@ return [
     'succes_reason' => 'Reden: :reason',
     'deleted_added' => 'Adtje voor :Name succesvol verwijderd!',
     'deleted_reason' => 'Reden: :reason',
-    'collected' => 'Adtje succesvol geïnt'
+    'collected' => 'Adtje succesvol geïnt',
 ];

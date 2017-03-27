@@ -15,5 +15,5 @@ return [
 
     'navigation_toggle' => 'Laat menu zien',
     'website_created' => 'Website gemaakt',
-    
+
 ];
