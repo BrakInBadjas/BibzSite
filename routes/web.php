@@ -39,4 +39,6 @@ Route::group(['middleware' => 'auth'], function () {
             'edit',
             'update',
         ]]);
+
+    Route::post('/issues/create', ['as' => 'github.issue', 'uses' => 'GithubController@store']);
 });
